@@ -94,6 +94,8 @@ fun DigitalShelterAppTheme(
 
     MaterialTheme(
         colorScheme = colors,
-        content = content
+        content = content,
+        typography = Typography,
+        shapes = Shapes
     )
 }

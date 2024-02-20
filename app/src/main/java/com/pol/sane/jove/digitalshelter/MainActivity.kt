@@ -17,9 +17,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.pol.sane.jove.digitalshelter.graphs.authNavGraph
-import com.pol.sane.jove.digitalshelter.graphs.mainNavGraph
-import com.pol.sane.jove.digitalshelter.screens.login.LoginScreen
+import com.pol.sane.jove.digitalshelter.ui.graphs.authNavGraph
+import com.pol.sane.jove.digitalshelter.ui.graphs.mainNavGraph
 import com.pol.sane.jove.digitalshelter.ui.theme.DigitalShelterAppTheme
 import java.security.AccessController
 
@@ -47,7 +46,7 @@ fun DigitalShelterApp(
     navController: NavHostController = rememberNavController()){
         NavHost(
             navController = navController,
-            startDestination = Graph.AUTHENTICATION
+            startDestination = RootGraph.AUTHENTICATION
         )
         {
             authNavGraph(navController = navController)
@@ -68,9 +67,7 @@ fun DigitalShelterBottomBar(){
 
 }
 
-object Graph {
+object RootGraph {
     const val AUTHENTICATION = "auth_graph"
     const val MAIN = "main_graph"
-    const val SEARCH = "search_graph"
-
 }

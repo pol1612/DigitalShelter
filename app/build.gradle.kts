@@ -2,6 +2,8 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.google.gms.google-services")
+    id("kotlin-kapt")
+    kotlin("kapt")
 }
 
 android {
@@ -75,6 +77,12 @@ dependencies {
     implementation("com.google.firebase:firebase-firestore")
     implementation("com.google.firebase:firebase-storage")
     implementation("androidx.navigation:navigation-runtime-ktx:2.7.7")
+    //implementation("com.google.dagger:hilt-compiler:2.47")
+    //implementation("com.google.dagger:dagger:latest_version")
+    //kapt("com.google.dagger:dagger-compiler:latest_version")
+    implementation("com.google.dagger:hilt-android:2.47")
+    kapt("com.google.dagger:hilt-compiler:2.47")
+
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
