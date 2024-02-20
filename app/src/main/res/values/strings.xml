@@ -1,7 +1,13 @@
 <resources>
     <string name="app_name">DigitalShelter</string>
-    <string name="login_into_the_app">Login into the app</string>
+
+
+    <string name="login_into_the_app">Log into the app</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="repeat_password">Repeat password</string>
+    <string name="sign_in">Sign in</string>
+    <string name="forgot_password">Forgot password? Click to get recovery email</string>
+    <string name="sign_up_icon_button">Sign Up Icon Button</string>
+
 </resources>
