@@ -1,6 +1,6 @@
 package com.pol.sane.jove.digitalshelter.model.service
 
-class User(
+data class User(
     val id: String = ""
 ) {
 }

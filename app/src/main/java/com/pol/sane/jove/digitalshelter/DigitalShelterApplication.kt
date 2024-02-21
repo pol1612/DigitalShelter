@@ -14,7 +14,7 @@ class DigitalShelterApplication: Application() {
             androidContext(this@DigitalShelterApplication)
             modules(appModule)
         }
-        FirebaseApp.initializeApp(this)
+        //FirebaseApp.initializeApp(this)
 
     }
 }

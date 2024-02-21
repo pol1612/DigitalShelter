@@ -4,9 +4,8 @@ package com.pol.sane.jove.digitalshelter.model.service.module
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.pol.sane.jove.digitalshelter.model.service.implementations.AccountService
-import com.pol.sane.jove.digitalshelter.model.service.interfaces.AccountServiceInterface
-import com.pol.sane.jove.digitalshelter.ui.screens.auth.login.LoginViewModel
+import com.pol.sane.jove.digitalshelter.model.service.implementations.UserService
+import com.pol.sane.jove.digitalshelter.model.service.interfaces.UserServiceInterface
 import org.koin.dsl.module
 
 val appModule = module {
@@ -14,7 +13,7 @@ val appModule = module {
     single { FirebaseAuth.getInstance() } // Provide FirebaseAuth instance
     single { FirebaseFirestore.getInstance() } // Provide FirebaseFirestore instance
     // Services Implementations
-    single<AccountServiceInterface> { AccountService(get()) }
+    single<UserServiceInterface> { UserService(get()) }
     //ViewModels
     //viewModel {LoginViewModel()}
 }

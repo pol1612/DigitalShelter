@@ -3,9 +3,7 @@ package com.pol.sane.jove.digitalshelter.ui.screens.auth.login
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavHostController
-import com.pol.sane.jove.digitalshelter.model.service.interfaces.AccountServiceInterface
-import kotlinx.coroutines.Delay
-import kotlinx.coroutines.delay
+import com.pol.sane.jove.digitalshelter.model.service.interfaces.UserServiceInterface
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -16,7 +14,7 @@ import org.koin.core.component.inject
 
 class LoginViewModel: ViewModel(), KoinComponent {
 
-    private val accountService: AccountServiceInterface by inject()
+    private val accountService: UserServiceInterface by inject()
 
 
     private val  _uiState = MutableStateFlow(LoginUiState())
@@ -52,9 +50,10 @@ class LoginViewModel: ViewModel(), KoinComponent {
     fun onLoginClick(navHostController: NavHostController){
         Log.i("LoginViewModel::onLoginClick", "login viewModel method")
         //Thread.sleep(10000)
+        accountService.authenticate(_uiState.value.email,_uiState.value.password)
         runBlocking {
 
-            accountService.authenticate(_uiState.value.email,_uiState.value.password)
+
         }
     }
 
