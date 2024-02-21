@@ -35,7 +35,14 @@ class AccountService(private val auth: FirebaseAuth): AccountServiceInterface {
 
     override suspend fun authenticate(email: String, password: String) {
         Log.i("AccountService::authenticate","login service method")
-        auth.signInWithEmailAndPassword(email, password).await()
+        auth.signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    Log.i("AccountService::authenticate::success","login realized: ${auth.currentUser?.email.toString()}")
+                } else {
+                    Log.i("AccountService::authenticate::failure",task.exception?.message ?: "An unknown error occurred")
+                }
+            }
     }
 
     override suspend fun sendRecoveryEmail(email: String) {

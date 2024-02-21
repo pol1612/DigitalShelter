@@ -11,6 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:name=".DigitalShelterApplication"
+        android:enableOnBackInvokedCallback="true"
         android:theme="@style/Theme.DigitalShelter"
         tools:targetApi="31">
         <activity

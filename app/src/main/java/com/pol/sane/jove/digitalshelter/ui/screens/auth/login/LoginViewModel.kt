@@ -51,7 +51,7 @@ class LoginViewModel: ViewModel(), KoinComponent {
 
     fun onLoginClick(navHostController: NavHostController){
         Log.i("LoginViewModel::onLoginClick", "login viewModel method")
-        Thread.sleep(10000)
+        //Thread.sleep(10000)
         runBlocking {
 
             accountService.authenticate(_uiState.value.email,_uiState.value.password)

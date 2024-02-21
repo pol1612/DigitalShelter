@@ -75,6 +75,7 @@ dependencies {
     implementation("com.google.firebase:firebase-firestore")
     implementation("com.google.firebase:firebase-storage")
     implementation("androidx.navigation:navigation-runtime-ktx:2.7.7")
+    implementation("com.google.firebase:firebase-appcheck-playintegrity")
     //koin
     implementation("io.insert-koin:koin-android:3.2.2")
 
