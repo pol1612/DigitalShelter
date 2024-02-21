@@ -16,6 +16,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -25,10 +26,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+
 import androidx.navigation.NavHostController
 import com.pol.sane.jove.digitalshelter.R.drawable as AppIcon
 import com.pol.sane.jove.digitalshelter.ui.common.BasicButton
 import com.pol.sane.jove.digitalshelter.ui.common.BasicTextButton
+import androidx.compose.runtime.getValue
 import com.pol.sane.jove.digitalshelter.ui.common.EmailField
 import com.pol.sane.jove.digitalshelter.ui.common.PasswordField
 import com.pol.sane.jove.digitalshelter.R.string as AppText
@@ -40,6 +43,7 @@ fun LoginScreen(
     viewModel: LoginViewModel = viewModel(),
     navHostController: NavHostController
 ){
+    val uiState by viewModel.uiState.collectAsState()
     Scaffold(
         topBar = {
             TopAppBar(
@@ -71,13 +75,13 @@ fun LoginScreen(
                         .fillMaxWidth()
                         .height(90.dp)
                 )
-                EmailField(value = "", onNewValue = {})
+                EmailField(value = uiState.email, onNewValue = {newValue -> viewModel.onEmailChange(newValue)})
                 Spacer(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(30.dp)
                 )
-                PasswordField(value = "", onNewValue = {})
+                PasswordField(value = uiState.password, onNewValue = {newValue -> viewModel.onPasswordChange(newValue)})
                 Spacer(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -88,12 +92,13 @@ fun LoginScreen(
                     .padding(16.dp, 8.dp)
                 )
                 {
+                    viewModel.onLoginClick(navHostController)
                 }
 
                 BasicTextButton(AppText.forgot_password, Modifier
                     .fillMaxWidth()
                     .padding(16.dp, 8.dp, 16.dp, 0.dp)) {
-
+                    viewModel.sendRecoveryEmail()
                 }
             }
 

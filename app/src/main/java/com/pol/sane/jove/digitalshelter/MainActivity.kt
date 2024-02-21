@@ -15,6 +15,7 @@ import com.pol.sane.jove.digitalshelter.ui.graphs.authNavGraph
 import com.pol.sane.jove.digitalshelter.ui.graphs.mainNavGraph
 import com.pol.sane.jove.digitalshelter.ui.theme.DigitalShelterAppTheme
 
+
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,7 +26,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    DigitalShelterApp()
+                    DigitalShelter()
                 }
             }
         }
@@ -35,7 +36,7 @@ class MainActivity : ComponentActivity() {
 
 
 @Composable
-fun DigitalShelterApp(
+fun DigitalShelter(
     navController: NavHostController = rememberNavController()){
         NavHost(
             navController = navController,

@@ -1,5 +1,6 @@
 package com.pol.sane.jove.digitalshelter.model.service.implementations
 
+import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.pol.sane.jove.digitalshelter.model.UserDetails
 import com.pol.sane.jove.digitalshelter.model.service.User
@@ -10,9 +11,7 @@ import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
-class AccountService @Inject constructor(
-    private val auth: FirebaseAuth
-): AccountServiceInterface {
+class AccountService(private val auth: FirebaseAuth): AccountServiceInterface {
     override val currentUserId: String
         get() = auth.currentUser?.uid.orEmpty()
     override val hasUser: Boolean
@@ -28,12 +27,14 @@ class AccountService @Inject constructor(
         }
 
     override suspend fun createAccountAndAuthenticate(email: String, password: String) {
+        Log.i("AccountService::createAccountAndAuthenticate","signUp service method")
         auth.createUserWithEmailAndPassword(email,password).await()
         authenticate(email, password)
 
     }
 
     override suspend fun authenticate(email: String, password: String) {
+        Log.i("AccountService::authenticate","login service method")
         auth.signInWithEmailAndPassword(email, password).await()
     }
 
