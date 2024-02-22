@@ -14,6 +14,9 @@
         android:enableOnBackInvokedCallback="true"
         android:theme="@style/Theme.DigitalShelter"
         tools:targetApi="31">
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_cloud_api_key" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
