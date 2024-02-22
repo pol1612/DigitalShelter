@@ -81,6 +81,7 @@ dependencies {
     implementation("io.insert-koin:koin-android:3.2.2")
     //maps
     implementation("com.google.maps.android:maps-compose:2.11.4")
+    
     implementation ("com.google.android.gms:play-services-maps:18.1.0")
     //implementation(libs.play.services.location)
 
