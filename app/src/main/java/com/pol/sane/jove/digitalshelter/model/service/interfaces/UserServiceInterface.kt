@@ -1,11 +1,14 @@
 
 package com.pol.sane.jove.digitalshelter.model.service.interfaces
 
+import com.pol.sane.jove.digitalshelter.model.service.User
+
 interface UserServiceInterface {
-  val currentUserId: String
-  fun createAccountAndAuthenticate(email: String, password: String): Boolean
-  fun authenticate(email: String, password: String): Boolean
-  fun sendRecoveryEmail(email: String): Boolean
-  fun deleteAccount(): Boolean
-  fun signOut(): Boolean
+        fun createAccountAndAuthenticate(email: String, password: String): Boolean
+        fun authenticate(email: String, password: String): Boolean
+        fun sendRecoveryEmail(email: String): Boolean
+        fun deleteCurrentAccount(): Boolean
+        fun signOut(): Boolean
+
+        val currentUser: User
 }

@@ -30,6 +30,7 @@ class LoginViewModel: ViewModel(), KoinComponent {
                 email = newValue
             )
         }
+        enableOrDisableSignInButton()
     }
 
     fun onPasswordChange(newValue: String) {
@@ -37,6 +38,7 @@ class LoginViewModel: ViewModel(), KoinComponent {
             currentState.copy(
                 password = newValue)
         }
+        enableOrDisableSignInButton()
     }
 
     fun onSignUpClick(navHostController: NavHostController) {
@@ -45,6 +47,22 @@ class LoginViewModel: ViewModel(), KoinComponent {
             //TODO: go to signup screen
         }
 
+    }
+
+    private fun enableOrDisableSignInButton() {
+        if (!_uiState.value.email.equals("") && !_uiState.value.password.equals("")) {
+            _uiState.update { currentState ->
+                currentState.copy(
+                    isSignInButtonEnabled = true
+                )
+            }
+        } else {
+            _uiState.update { currentState ->
+                currentState.copy(
+                    isSignInButtonEnabled = false
+                )
+            }
+        }
     }
 
     fun onLoginClick(navHostController: NavHostController){

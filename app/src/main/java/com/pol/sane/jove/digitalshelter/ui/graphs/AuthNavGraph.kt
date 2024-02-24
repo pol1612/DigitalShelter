@@ -13,7 +13,7 @@ fun NavGraphBuilder.authNavGraph(
 ){
     navigation(
         route = RootGraph.AUTHENTICATION,
-        startDestination = AuthScreen.SIGN_UP_SCREEN
+        startDestination = AuthScreen.LOGIN_SCREEN
     ){
         composable(route = AuthScreen.LOGIN_SCREEN){
             LoginScreen(navHostController = navHostController)

@@ -33,11 +33,13 @@ import androidx.navigation.NavController
 
 import androidx.navigation.NavHostController
 import com.pol.sane.jove.digitalshelter.R.drawable as AppIcon
-import com.pol.sane.jove.digitalshelter.ui.common.BasicButton
 import com.pol.sane.jove.digitalshelter.ui.common.BasicTextButton
 import androidx.compose.runtime.getValue
+import com.pol.sane.jove.digitalshelter.R
+import com.pol.sane.jove.digitalshelter.ui.common.BasicButton
 import com.pol.sane.jove.digitalshelter.ui.common.EmailField
 import com.pol.sane.jove.digitalshelter.ui.common.PasswordField
+import com.pol.sane.jove.digitalshelter.ui.graphs.AuthScreen
 import com.pol.sane.jove.digitalshelter.R.string as AppText
 
 
@@ -54,17 +56,7 @@ fun LoginScreen(
                 title = { Text(stringResource(AppText.login_into_the_app)) },
                 colors = TopAppBarDefaults.mediumTopAppBarColors(
                       containerColor = MaterialTheme.colorScheme.primaryContainer),
-                actions = {
-                    Row {
-                        IconButton(onClick = {viewModel.onSignUpClick(navHostController)})
-                        {
-                            Icon(painter = painterResource(
-                                id = AppIcon.ic_create_account),
-                                contentDescription = stringResource(AppText.sign_up_icon_button)
-                            )
-                        }
-                    }
-                }
+
             )
         },
         content =  {
@@ -93,18 +85,32 @@ fun LoginScreen(
                         .fillMaxWidth()
                         .height(60.dp)
                 )
-                BasicButton(AppText.sign_in, Modifier
-                    .width(320.dp)
-                    .padding(16.dp, 8.dp)
+                BasicButton(
+                    text = AppText.sign_in,
+                    modifier = Modifier
+                        .width(320.dp)
+                        .padding(16.dp, 8.dp),
+                    action = {
+                        viewModel.onLoginClick(navHostController)
+                    },
+                    enabled = uiState.isSignInButtonEnabled
+
                 )
-                {
-                    viewModel.onLoginClick(navHostController)
-                }
+
 
                 BasicTextButton(AppText.forgot_password, Modifier
                     .fillMaxWidth()
                     .padding(16.dp, 8.dp, 16.dp, 0.dp)) {
                     viewModel.sendRecoveryEmail()
+                }
+
+                BasicTextButton(
+                    text = AppText.not_registered_click_here_to_sign_up, Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp, 8.dp, 16.dp, 0.dp),
+                ) {
+                    //viewModel.sendRecoveryEmail()
+                    //navHostController.navigate(AuthScreen.SIGN_UP_SCREEN)
                 }
             }
 

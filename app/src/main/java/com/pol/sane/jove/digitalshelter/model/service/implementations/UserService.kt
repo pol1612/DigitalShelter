@@ -4,12 +4,13 @@ import android.util.Log
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
+import com.pol.sane.jove.digitalshelter.model.service.User
 import com.pol.sane.jove.digitalshelter.model.service.interfaces.UserServiceInterface
 import kotlinx.coroutines.tasks.await
 
 class UserService(private val auth: FirebaseAuth): UserServiceInterface {
-    override val currentUserId: String
-        get() = auth.currentUser?.uid.orEmpty()
+    override val currentUser: User
+        get() = User(auth.currentUser?.uid,auth.currentUser?.email)
 
     override fun createAccountAndAuthenticate(email: String, password: String): Boolean {
         var userHasBeenSignedUpAndAuthenticated = false
@@ -47,7 +48,7 @@ class UserService(private val auth: FirebaseAuth): UserServiceInterface {
         //TODO
     }
 
-    override fun deleteAccount(): Boolean {
+    override fun deleteCurrentAccount(): Boolean {
         auth.currentUser!!.delete()
         return false
         //TODO

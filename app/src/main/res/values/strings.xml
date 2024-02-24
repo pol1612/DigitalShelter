@@ -12,5 +12,6 @@
     <string name="register_into_the_app">Register into the app</string>
     <string name="signup">SignUp</string>
     <string name="username">Username</string>
+    <string name="not_registered_click_here_to_sign_up">Not registered? Click to sign up</string>
 
 </resources>

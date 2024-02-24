@@ -196,10 +196,13 @@ fun SignUpScreen(navHostController: NavHostController) {
                     BasicButton(
                         text = AppText.signup,
                         modifier = Modifier
-                            .width(280.dp)
-                    ) {
+                            .width(280.dp),
+                        action = {
 
-                    }
+                        }
+
+
+                    )
                     Spacer(
                         modifier = Modifier
                             //.fillMaxWidth()

@@ -20,7 +20,7 @@ fun BasicTextButton(@StringRes text: Int, modifier: Modifier, action: () -> Unit
 }
 
 @Composable
-fun BasicButton(@StringRes text: Int, modifier: Modifier, action: () -> Unit) {
+fun BasicButton(@StringRes text: Int, modifier: Modifier, action: () -> Unit, enabled: Boolean = true) {
   Button(
     onClick = action,
     modifier = modifier,
@@ -28,7 +28,8 @@ fun BasicButton(@StringRes text: Int, modifier: Modifier, action: () -> Unit) {
       ButtonDefaults.buttonColors(
         containerColor = MaterialTheme.colorScheme.primary,
         contentColor = MaterialTheme.colorScheme.onPrimary
-      )
+      ),
+    enabled = enabled
   ) {
     Text(text = stringResource(text), fontSize = 16.sp)
   }
