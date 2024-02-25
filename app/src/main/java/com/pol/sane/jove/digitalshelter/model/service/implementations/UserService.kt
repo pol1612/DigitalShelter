@@ -1,15 +1,12 @@
 package com.pol.sane.jove.digitalshelter.model.service.implementations
 
 import android.util.Log
-import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.pol.sane.jove.digitalshelter.model.service.User
 import com.pol.sane.jove.digitalshelter.model.service.interfaces.UserServiceInterface
-import kotlinx.coroutines.tasks.await
 
 class UserService(private val auth: FirebaseAuth): UserServiceInterface {
-    override val currentUser: User
+    override val  currentUser: User
         get() = User(auth.currentUser?.uid,auth.currentUser?.email)
 
     override fun createAccountAndAuthenticate(email: String, password: String): Boolean {
@@ -42,10 +39,18 @@ class UserService(private val auth: FirebaseAuth): UserServiceInterface {
         return userHasBeenAuthenticated
     }
 
-    override fun sendRecoveryEmail(email: String): Boolean{
+     override suspend fun sendRecoveryEmail(email: String, setViewModelSnackbarText: (String) -> Unit){
         auth.sendPasswordResetEmail(email)
-        return false
-        //TODO
+            .addOnFailureListener {
+                Log.i("UserService::sendRecoveryEmail::failure", "email not sent")
+                setViewModelSnackbarText("There was an error delivering the email.")
+            }
+            .addOnSuccessListener {
+                Log.i("UserService::sendRecoveryEmail::success", "email sent")
+                setViewModelSnackbarText("The email was successfully sent.")
+
+            }
+
     }
 
     override fun deleteCurrentAccount(): Boolean {

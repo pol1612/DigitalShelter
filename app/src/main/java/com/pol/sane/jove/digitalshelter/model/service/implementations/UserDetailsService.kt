@@ -1,16 +1,34 @@
 package com.pol.sane.jove.digitalshelter.model.service.implementations
 
-import com.google.firebase.Firebase
+import android.util.Log
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.storage.FirebaseStorage
-import com.pol.sane.jove.digitalshelter.model.UserDetails
+import com.pol.sane.jove.digitalshelter.model.service.UserDetails
 import com.pol.sane.jove.digitalshelter.model.service.interfaces.UserDetailsServiceInterface
+import kotlinx.coroutines.tasks.await
 
-class UserDetailsService(private val database: FirebaseFirestore
+class UserDetailsService(
+    private val database: FirebaseFirestore,
+    private val auth: FirebaseAuth
 ) : UserDetailsServiceInterface {
 
-    override val currentUserUserDetails: UserDetails
-        get() = UserDetails()
+   override val currentUserUserDetails: UserDetails
+        get() {
+            var result = UserDetails()
+            if(auth.currentUser != null){
+
+                database.collection("UserDetails")
+                    .whereEqualTo("userId",auth.currentUser!!.uid).get()
+                    .addOnFailureListener { task ->
+                        Log.d("UserDetailsService::currentUserUserDetails","${task.message}")
+                    }
+                    .addOnSuccessListener { task ->
+                        result = task.documents.get(0).toObject(UserDetails::class.java)!!
+
+                    }
+            }
+            return result
+        }
     override fun loadCurrentUserUserDetailsIntoApp() {
         TODO("Not yet implemented")
     }

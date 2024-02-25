@@ -16,10 +16,17 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Snackbar
+import androidx.compose.material3.SnackbarData
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -35,11 +42,18 @@ import androidx.navigation.NavHostController
 import com.pol.sane.jove.digitalshelter.R.drawable as AppIcon
 import com.pol.sane.jove.digitalshelter.ui.common.BasicTextButton
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import com.pol.sane.jove.digitalshelter.R
 import com.pol.sane.jove.digitalshelter.ui.common.BasicButton
 import com.pol.sane.jove.digitalshelter.ui.common.EmailField
 import com.pol.sane.jove.digitalshelter.ui.common.PasswordField
 import com.pol.sane.jove.digitalshelter.ui.graphs.AuthScreen
+import kotlinx.coroutines.Delay
+import kotlinx.coroutines.InternalCoroutinesApi
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import android.util.Log
 import com.pol.sane.jove.digitalshelter.R.string as AppText
 
 
@@ -50,7 +64,12 @@ fun LoginScreen(
     navHostController: NavHostController
 ){
     val uiState by viewModel.uiState.collectAsState()
+    val coroutineScope = rememberCoroutineScope()
+    val snackbarHostState = remember { SnackbarHostState() }
+
+
     Scaffold(
+        snackbarHost = { SnackbarHost(snackbarHostState) },
         topBar = {
             TopAppBar(
                 title = { Text(stringResource(AppText.login_into_the_app)) },
@@ -102,16 +121,40 @@ fun LoginScreen(
                     .fillMaxWidth()
                     .padding(16.dp, 8.dp, 16.dp, 0.dp)) {
                     viewModel.sendRecoveryEmail()
+                    /*if (uiState.snackBarText != ""){
+                        coroutineScope.launch {
+                            delay(100)
+                            val snackbarResult = snackbarHostState.showSnackbar(
+                                message = uiState.snackBarText,
+                                duration = SnackbarDuration.Short
+                            )
+                        }
+                    }*/
+
                 }
 
                 BasicTextButton(
-                    text = AppText.not_registered_click_here_to_sign_up, Modifier
+                    text = AppText.not_registered_click_here_to_sign_up,
+                    Modifier
                         .fillMaxWidth()
                         .padding(16.dp, 8.dp, 16.dp, 0.dp),
                 ) {
                     //viewModel.sendRecoveryEmail()
                     //navHostController.navigate(AuthScreen.SIGN_UP_SCREEN)
                 }
+                LaunchedEffect(key1 = uiState.snackBarText){
+                    if(uiState.snackBarText != ""){
+                        val snackbarResult =  snackbarHostState.showSnackbar(
+                            message = uiState.snackBarText,
+                            duration = SnackbarDuration.Short
+                        )
+                        if (snackbarResult == SnackbarResult.Dismissed){
+                            Log.i("LoginScreen::Snackbar","dismissed")
+                            //TODO? reset viewmdoel snackbar text
+                        }
+                    }
+                }
+
             }
 
         }

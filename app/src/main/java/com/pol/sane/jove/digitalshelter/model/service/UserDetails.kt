@@ -1,5 +1,5 @@
 
-package com.pol.sane.jove.digitalshelter.model
+package com.pol.sane.jove.digitalshelter.model.service
 
 data class UserDetails(
     val id: String = "",

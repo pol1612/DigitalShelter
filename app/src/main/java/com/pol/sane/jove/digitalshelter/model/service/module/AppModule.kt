@@ -16,7 +16,8 @@ val appModule = module {
     single { FirebaseFirestore.getInstance() } // Provide FirebaseFirestore instance
     // Services Implementations
     single<UserServiceInterface> { UserService(get()) }
-    single<UserDetailsServiceInterface> { UserDetailsService(get()) }
+    single<UserDetailsServiceInterface> { UserDetailsService(get(),get()) }
+
     //ViewModels
     //viewModel {LoginViewModel()}
 }

@@ -1,6 +1,6 @@
 package com.pol.sane.jove.digitalshelter.model.service.interfaces
 
-import com.pol.sane.jove.digitalshelter.model.UserDetails
+import com.pol.sane.jove.digitalshelter.model.service.UserDetails
 
 interface UserDetailsServiceInterface {
 
