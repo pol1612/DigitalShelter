@@ -121,15 +121,7 @@ fun LoginScreen(
                     .fillMaxWidth()
                     .padding(16.dp, 8.dp, 16.dp, 0.dp)) {
                     viewModel.sendRecoveryEmail()
-                    /*if (uiState.snackBarText != ""){
-                        coroutineScope.launch {
-                            delay(100)
-                            val snackbarResult = snackbarHostState.showSnackbar(
-                                message = uiState.snackBarText,
-                                duration = SnackbarDuration.Short
-                            )
-                        }
-                    }*/
+
 
                 }
 
@@ -139,8 +131,7 @@ fun LoginScreen(
                         .fillMaxWidth()
                         .padding(16.dp, 8.dp, 16.dp, 0.dp),
                 ) {
-                    //viewModel.sendRecoveryEmail()
-                    //navHostController.navigate(AuthScreen.SIGN_UP_SCREEN)
+                    viewModel.onSignUpClick(navHostController)
                 }
                 LaunchedEffect(key1 = uiState.snackBarText){
                     if(uiState.snackBarText != ""){
@@ -150,7 +141,6 @@ fun LoginScreen(
                         )
                         if (snackbarResult == SnackbarResult.Dismissed){
                             Log.i("LoginScreen::Snackbar","dismissed")
-                            //TODO? reset viewmdoel snackbar text
                         }
                     }
                 }

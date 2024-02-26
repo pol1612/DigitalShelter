@@ -10,9 +10,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.pol.sane.jove.digitalshelter.ui.graphs.authNavGraph
-import com.pol.sane.jove.digitalshelter.ui.graphs.mainNavGraph
+import com.pol.sane.jove.digitalshelter.ui.screens.main.adopter.AdopterMainScreen
+import com.pol.sane.jove.digitalshelter.ui.screens.main.shelter.ShelterMainScreen
 import com.pol.sane.jove.digitalshelter.ui.theme.DigitalShelterAppTheme
 
 
@@ -44,7 +46,14 @@ fun DigitalShelter(
         )
         {
             authNavGraph(navHostController = navController)
-            mainNavGraph(navController = navController)
+            //mainScreenNavGraph(navController = navController)
+            //mainNavGraph(navController = navController)
+            composable(route = RootGraph.MAIN_SHELTER){
+                ShelterMainScreen(navController)
+            }
+            composable(route = RootGraph.MAIN_ADOPTER){
+                AdopterMainScreen(navController)
+            }
         }
 
 }
@@ -63,5 +72,6 @@ fun DigitalShelterBottomBar(){
 
 object RootGraph {
     const val AUTHENTICATION = "auth_graph"
-    const val MAIN = "main_graph"
+    const val MAIN_SHELTER = "main_shelter"
+    const val MAIN_ADOPTER = "main_adopter"
 }

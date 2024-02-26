@@ -9,14 +9,14 @@ class UserService(private val auth: FirebaseAuth): UserServiceInterface {
     override val  currentUser: User
         get() = User(auth.currentUser?.uid,auth.currentUser?.email)
 
-    override fun createAccountAndAuthenticate(email: String, password: String): Boolean {
+    override fun createAccountAndAuthenticate(email: String, password: String, setViewModelSnackbarText: (String) -> Unit): Boolean {
         var userHasBeenSignedUpAndAuthenticated = false
         Log.i("AccountService::createAccountAndAuthenticate","signUp service method")
         auth.createUserWithEmailAndPassword(email,password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     Log.i("AccountService::createAccountAndAuthenticate::success","signUp realized")
-                    userHasBeenSignedUpAndAuthenticated = authenticate(email, password)
+                    userHasBeenSignedUpAndAuthenticated = authenticate(email, password, setViewModelSnackbarText)
                 } else {
                     Log.i("AccountService::createAccountAndAuthenticate::failure",task.exception?.message ?: "An unknown error occurred")
                 }
@@ -24,17 +24,25 @@ class UserService(private val auth: FirebaseAuth): UserServiceInterface {
         return userHasBeenSignedUpAndAuthenticated
     }
 
-     override fun authenticate(email: String, password: String): Boolean {
+     override fun authenticate(email: String, password: String, setViewModelSnackbarText: (String) -> Unit): Boolean {
         var userHasBeenAuthenticated = false
         Log.i("AccountService::authenticate","login service method")
         auth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    Log.i("AccountService::authenticate::success","login realized: ${auth.currentUser?.email.toString()}")
-                    userHasBeenAuthenticated = true
-                } else {
-                    Log.i("AccountService::authenticate::failure",task.exception?.message ?: "An unknown error occurred")
+
+            .addOnFailureListener { task ->
+                Log.i("UserService::authenticate::failure", "${task.message}")
+
+                when(task.message){
+                    "The supplied auth credential is incorrect, malformed or has expired." -> { setViewModelSnackbarText("Wrong email or password credentials.") }
+                    "A network error (such as timeout, interrupted connection or unreachable host) has occurred." -> { setViewModelSnackbarText("Network error.")}
+                    else -> { setViewModelSnackbarText("Unknown error.") }
                 }
+
+            }
+            .addOnSuccessListener {
+                Log.i("AccountService::authenticate::success","login realized: ${auth.currentUser?.email.toString()}")
+                userHasBeenAuthenticated = true
+                setViewModelSnackbarText("The user was successfully logged in.")
             }
         return userHasBeenAuthenticated
     }

@@ -4,8 +4,8 @@ package com.pol.sane.jove.digitalshelter.model.service.interfaces
 import com.pol.sane.jove.digitalshelter.model.service.User
 
 interface UserServiceInterface {
-        fun createAccountAndAuthenticate(email: String, password: String): Boolean
-        fun authenticate(email: String, password: String): Boolean
+        fun createAccountAndAuthenticate(email: String, password: String, setViewModelSnackbarText: (String) -> Unit): Boolean
+        fun authenticate(email: String, password: String, setViewModelSnackbarText: (String) -> Unit): Boolean
         fun deleteCurrentAccount(): Boolean
         fun signOut(): Boolean
 

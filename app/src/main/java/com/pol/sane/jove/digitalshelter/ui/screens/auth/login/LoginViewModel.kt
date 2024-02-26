@@ -6,7 +6,9 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
+import com.google.rpc.context.AttributeContext.Auth
 import com.pol.sane.jove.digitalshelter.model.service.interfaces.UserServiceInterface
+import com.pol.sane.jove.digitalshelter.ui.graphs.AuthScreen
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -47,10 +49,11 @@ class LoginViewModel: ViewModel(), KoinComponent {
     }
 
     fun onSignUpClick(navHostController: NavHostController) {
-        runBlocking {
-            Log.i("LoginViewModel::onSignUpClick", "go to signUp screen")
-            //TODO: go to signup screen
-        }
+
+        Log.i("LoginViewModel::onSignUpClick", "go to signUp screen")
+        //TODO: go to signup screen
+
+        navHostController.navigate(AuthScreen.SIGN_UP_SCREEN)
 
     }
 
@@ -73,11 +76,23 @@ class LoginViewModel: ViewModel(), KoinComponent {
     fun onLoginClick(navHostController: NavHostController){
         Log.i("LoginViewModel::onLoginClick", "login viewModel method")
         //Thread.sleep(10000)
-        userService.authenticate(_uiState.value.email,_uiState.value.password)
-        runBlocking {
-
-
+        userService.authenticate(
+            _uiState.value.email,
+            _uiState.value.password
+        ) { text ->
+            _uiState.update { it ->
+                it.copy(
+                    snackBarText = text
+                )
+            }
         }
+        _uiState.update { it ->
+            it.copy(
+                snackBarText = ""
+            )
+        }
+        //TODO: load user details and go to shelter or adopter accordingly
+
     }
 
     fun sendRecoveryEmail() {
@@ -91,20 +106,18 @@ class LoginViewModel: ViewModel(), KoinComponent {
                         )
                     }
                 }
-                /*
-                if (result){
-                    _uiState.update { it -> it.copy(snackBarText = "The email was successfully sent.") }
-                }else{
-                    _uiState.update { it -> it.copy(snackBarText = "There was an error delivering the email..") }
-                }*/
             }
             else{
                 _uiState.update { currentState ->
                     currentState.copy(
-                        email = "",
                         snackBarText = "The email is wrongly formatted."
                     )
                 }
+            }
+            _uiState.update { currentState ->
+                currentState.copy(
+                    email = ""
+                )
             }
 
         }
