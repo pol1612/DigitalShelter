@@ -42,6 +42,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
+import androidx.lifecycle.viewmodel.compose.viewModel
+
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerState
@@ -56,7 +58,10 @@ import com.pol.sane.jove.digitalshelter.R.string as AppText
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
-fun SignUpScreen(navHostController: NavHostController) {
+fun SignUpScreen(
+    navHostController: NavHostController,
+    viewModel: SignUpViewModel = viewModel(),
+) {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -64,7 +69,7 @@ fun SignUpScreen(navHostController: NavHostController) {
                 colors = TopAppBarDefaults.mediumTopAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primaryContainer),
                 navigationIcon = {
-                    IconButton(onClick = {}) {
+                    IconButton(onClick = {viewModel.goBack(navHostController)}) {
                         Icon(
                             imageVector = Icons.Rounded.ArrowBack,
                             contentDescription = Icons.Rounded.ArrowBack.name
@@ -179,6 +184,7 @@ fun SignUpScreen(navHostController: NavHostController) {
                                         MotionEvent.ACTION_DOWN -> {
                                             columnScrollingEnabled = false
                                         }
+
                                         MotionEvent.ACTION_UP -> {
                                             columnScrollingEnabled = true
                                         }
@@ -220,146 +226,7 @@ fun SignUpScreen(navHostController: NavHostController) {
 @Preview
 @Composable
 fun SignUpScreenPreview(){
-    SignUpScreen(navHostController = NavHostController(LocalContext.current))
+    SignUpScreen(
+        navHostController = NavHostController(LocalContext.current),
+        viewModel = SignUpViewModel())
 }
-@Preview
-@Composable
-fun GoogleMapWithoutParentDragPreview(){
-    GoogleMapWithoutParentDragPreview()
-}
-@Composable
-fun GoogleMapWithoutParentDrag(setColumnScrollingEnabledToTrue: () -> Unit, setColumnScrollingEnabledToFalse: () -> Unit ){
-    val hydePark = LatLng(51.508610, -0.163611)
-    val cameraPositionState = rememberCameraPositionState {
-        position = CameraPosition.fromLatLngZoom(hydePark, 10f)
-    }
-
-    // Consume drag gestures on the map
-    Box {
-        // Your Google Map composable here
-        // Use cameraPosition to adjust the position of the map
-        GoogleMap(
-            modifier = Modifier
-                .width(300.dp)
-                .height(400.dp)
-                .clip(Shapes.medium)
-                .motionEventSpy {
-                    when (it.action) {
-                        MotionEvent.ACTION_DOWN -> {
-                            setColumnScrollingEnabledToFalse
-                        }
-                        MotionEvent.ACTION_UP -> {
-                            setColumnScrollingEnabledToTrue
-                        }
-                    }
-                },
-            cameraPositionState = cameraPositionState
-        )
-        {
-            Marker(
-                state = MarkerState(position = hydePark),
-                title = "Hyde Park",
-                snippet = "Marker in Hyde Park"
-            )
-        }
-    }
-}
-    /*Column(
-                modifier = Modifier
-                    .padding(horizontal = 40.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
-
-
-            Spacer(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(90.dp)
-            )
-            UsernameField(
-                value = "",
-                onNewValue = {})
-            Spacer(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(30.dp)
-            )
-            EmailField(value = "", onNewValue = {})
-            Spacer(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(30.dp)
-            )
-
-            PasswordField(
-                value = "",
-                onNewValue = {},
-            )
-            Spacer(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(30.dp)
-            )
-            RepeatPasswordField(
-                value = "",
-                onNewValue = {}
-            )
-            Spacer(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(24.dp)
-            )
-
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.Start,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text("Do you want to register as a Shelter?", modifier = Modifier
-                    .padding(start = 20.dp)
-                    .width(200.dp))
-                Spacer(modifier = Modifier
-                    .width(25.dp))
-                Switch(false,{})
-                }
-            Spacer(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(24.dp)
-            )
-            if (true){
-                Row(modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 20.dp),
-                    horizontalArrangement = Arrangement.Start,) {
-                    Text(text = "Choose your shelter's location.")
-                }
-                Spacer(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(30.dp)
-                )
-
-                GoogleMapWithoutParentDrag()
-
-                Spacer(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(30.dp)
-                )
-            }
-            BasicButton(
-                text = AppText.signup,
-                modifier = Modifier
-                    .width(280.dp)
-            ) {
-
-            }
-            Spacer(
-                modifier = Modifier
-                    //.fillMaxWidth()
-                    .height(190.dp)
-            )
-        }
-        }*/

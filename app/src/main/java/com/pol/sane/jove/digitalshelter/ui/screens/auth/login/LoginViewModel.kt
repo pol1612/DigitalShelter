@@ -48,6 +48,7 @@ class LoginViewModel: ViewModel(), KoinComponent {
         enableOrDisableSignInButton()
     }
 
+
     fun onSignUpClick(navHostController: NavHostController) {
 
         Log.i("LoginViewModel::onSignUpClick", "go to signUp screen")

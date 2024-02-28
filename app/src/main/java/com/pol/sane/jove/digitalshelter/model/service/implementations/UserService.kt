@@ -16,7 +16,7 @@ class UserService(private val auth: FirebaseAuth): UserServiceInterface {
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     Log.i("AccountService::createAccountAndAuthenticate::success","signUp realized")
-                    userHasBeenSignedUpAndAuthenticated = authenticate(email, password, setViewModelSnackbarText)
+                    //userHasBeenSignedUpAndAuthenticated = authenticate(email, password, setViewModelSnackbarText)
                 } else {
                     Log.i("AccountService::createAccountAndAuthenticate::failure",task.exception?.message ?: "An unknown error occurred")
                 }
