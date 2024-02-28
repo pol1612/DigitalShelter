@@ -43,6 +43,8 @@ import androidx.navigation.NavHostController
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.rememberMultiplePermissionsState
 
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.rememberCameraPositionState
@@ -54,7 +56,9 @@ import com.pol.sane.jove.digitalshelter.ui.common.UsernameField
 import com.pol.sane.jove.digitalshelter.ui.theme.Shapes
 import com.pol.sane.jove.digitalshelter.R.string as AppText
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class,
+    ExperimentalPermissionsApi::class
+)
 @Composable
 fun SignUpScreen(
     navHostController: NavHostController,
@@ -151,71 +155,37 @@ fun SignUpScreen(
                             .width(200.dp))
                         Spacer(modifier = Modifier
                             .width(25.dp))
-                        Switch(uiState.isShelter,{viewModel.onIsShelterChange(it)})
+                        val locationPermissionsState = rememberMultiplePermissionsState(
+                            listOf(
+                                android.Manifest.permission.ACCESS_COARSE_LOCATION,
+                                android.Manifest.permission.ACCESS_FINE_LOCATION,
+                                //android.Manifest.permission.ACCESS_BACKGROUND_LOCATION,
+                            )
+                        )
+                        Switch(
+                            uiState.isShelter,
+                            onCheckedChange = {
+                                viewModel.onIsShelterChange(it)
+
+                                val allPermissionsRevoked =
+                                    locationPermissionsState.permissions.size ==
+                                            locationPermissionsState.revokedPermissions.size
+                                if(allPermissionsRevoked){
+                                    locationPermissionsState.launchMultiplePermissionRequest()
+                                }
+                            })
                     }
                     Spacer(
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(24.dp)
                     )
-                    /*if (uiState.isShelter){
-                        Row(modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 20.dp),
-                            horizontalArrangement = Arrangement.Start,) {
-                            Text(text = "Choose your shelter's location.")
-                        }
-                        Spacer(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(30.dp)
-                        )
-
-                        //GoogleMapWithoutParentDrag({columnScrollingEnabled = true},{columnScrollingEnabled = false})
-                        val initialPos = LatLng(51.508610, -0.163611)
-                        val cameraPositionState = rememberCameraPositionState {
-                            position = CameraPosition.fromLatLngZoom(initialPos, 10f)
-                        }
-                        GoogleMap(
-                            modifier = Modifier
-                                .width(300.dp)
-                                .height(400.dp)
-                                .clip(Shapes.medium)
-                                .motionEventSpy {
-                                    when (it.action) {
-                                        MotionEvent.ACTION_DOWN -> {
-                                            columnScrollingEnabled = false
-                                        }
-
-                                        MotionEvent.ACTION_UP -> {
-                                            columnScrollingEnabled = true
-                                        }
-                                    }
-                                },
-                            cameraPositionState = cameraPositionState
-                        )
-
-                        Spacer(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(30.dp)
-                        )
-                    }
-                    BasicButton(
-                        text = AppText.signup,
-                        modifier = Modifier
-                            .width(280.dp),
-                        action = {}
-                    )
-                    Spacer(
-                        modifier = Modifier
-                            //.fillMaxWidth()
-                            .height(100.dp)
-                    )*/
                 }
             }
             if(uiState.isShelter) {
+
                 item {
+
                     Row(
                         modifier = Modifier
                             .fillMaxWidth(),

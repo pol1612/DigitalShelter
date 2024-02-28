@@ -50,8 +50,11 @@ class SignUpViewModel: ViewModel(), KoinComponent {
         }
     }
     fun onIsShelterChange(newValue: Boolean){
+
+
         _uiState.update { it ->
             it.copy(isShelter = newValue)
         }
+
     }
 }

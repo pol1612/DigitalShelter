@@ -87,6 +87,8 @@ dependencies {
 
     implementation ("commons-validator:commons-validator:1.7")
 
+    implementation ("com.google.accompanist:accompanist-permissions:0.35.0-alpha")
+
 
 
 
