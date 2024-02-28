@@ -26,10 +26,7 @@ class LoginViewModel: ViewModel(), KoinComponent {
 
     private val  _uiState = MutableStateFlow(LoginUiState())
     val uiState: StateFlow<LoginUiState> = _uiState.asStateFlow()
-    private val email
-        get() = uiState.value.email
-    private val password
-        get() = uiState.value.password
+
 
     fun onEmailChange(newValue: String) {
         _uiState.update { currentState ->

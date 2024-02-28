@@ -104,35 +104,42 @@ fun LoginScreen(
                         .fillMaxWidth()
                         .height(60.dp)
                 )
-                BasicButton(
-                    text = AppText.sign_in,
+                Column(
                     modifier = Modifier
-                        .width(320.dp)
-                        .padding(16.dp, 8.dp),
-                    action = {
-                        viewModel.onLoginClick(navHostController)
-                    },
-                    enabled = uiState.isSignInButtonEnabled
-
-                )
-
-
-                BasicTextButton(AppText.forgot_password, Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp, 8.dp, 16.dp, 0.dp)) {
-                    viewModel.sendRecoveryEmail()
-
-
-                }
-
-                BasicTextButton(
-                    text = AppText.not_registered_click_here_to_sign_up,
-                    Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp, 8.dp, 16.dp, 0.dp),
+                        .width(340.dp),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    viewModel.onSignUpClick(navHostController)
+                    BasicButton(
+                        text = AppText.sign_in,
+                        modifier = Modifier
+                            .width(320.dp)
+                            .padding( horizontal =  0.dp, vertical =  8.dp),
+                        action = {
+                            viewModel.onLoginClick(navHostController)
+                        },
+                        enabled = uiState.isSignInButtonEnabled
+
+                    )
+
+                    BasicTextButton(AppText.forgot_password, Modifier
+                        .fillMaxWidth()
+                        //.padding(16.dp, 8.dp, 16.dp, 0.dp)
+                    ){
+                        viewModel.sendRecoveryEmail()
+
+
+                    }
+                    BasicTextButton(
+                        text = AppText.not_registered_click_here_to_sign_up,
+                        Modifier
+                            .fillMaxWidth()
+                            //.padding(16.dp, 8.dp, 16.dp, 0.dp),
+                    ) {
+                        viewModel.onSignUpClick(navHostController)
+                    }
                 }
+
                 LaunchedEffect(key1 = uiState.snackBarText){
                     if(uiState.snackBarText != ""){
                         val snackbarResult =  snackbarHostState.showSnackbar(

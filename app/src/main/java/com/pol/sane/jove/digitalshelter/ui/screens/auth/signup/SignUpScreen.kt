@@ -3,7 +3,6 @@ package com.pol.sane.jove.digitalshelter.ui.screens.auth.signup
 import android.view.MotionEvent
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -26,6 +25,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -45,8 +45,6 @@ import com.google.android.gms.maps.model.LatLng
 import androidx.lifecycle.viewmodel.compose.viewModel
 
 import com.google.maps.android.compose.GoogleMap
-import com.google.maps.android.compose.Marker
-import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
 import com.pol.sane.jove.digitalshelter.ui.common.BasicButton
 import com.pol.sane.jove.digitalshelter.ui.common.EmailField
@@ -62,6 +60,8 @@ fun SignUpScreen(
     navHostController: NavHostController,
     viewModel: SignUpViewModel = viewModel(),
 ) {
+    val uiState by viewModel.uiState.collectAsState()
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -105,14 +105,16 @@ fun SignUpScreen(
                             .height(90.dp)
                     )
                     UsernameField(
-                        value = "",
-                        onNewValue = {})
+                        value = uiState.username,
+                        onNewValue = {viewModel.onUsernameChange(it)})
                     Spacer(
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(30.dp)
                     )
-                    EmailField(value = "", onNewValue = {})
+                    EmailField(
+                        value = uiState.email,
+                        onNewValue = {viewModel.onEmailChange(it)})
                     Spacer(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -120,8 +122,8 @@ fun SignUpScreen(
                     )
 
                     PasswordField(
-                        value = "",
-                        onNewValue = {},
+                        value = uiState.password,
+                        onNewValue = {viewModel.onPasswordChange(it)},
                     )
                     Spacer(
                         modifier = Modifier
@@ -129,8 +131,8 @@ fun SignUpScreen(
                             .height(30.dp)
                     )
                     RepeatPasswordField(
-                        value = "",
-                        onNewValue = {}
+                        value = uiState.repeatedPassword,
+                        onNewValue = {viewModel.onRepeatedPasswordChange(it)}
                     )
                     Spacer(
                         modifier = Modifier
@@ -149,14 +151,14 @@ fun SignUpScreen(
                             .width(200.dp))
                         Spacer(modifier = Modifier
                             .width(25.dp))
-                        Switch(false,{})
+                        Switch(uiState.isShelter,{viewModel.onIsShelterChange(it)})
                     }
                     Spacer(
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(24.dp)
                     )
-                    if (true){
+                    /*if (uiState.isShelter){
                         Row(modifier = Modifier
                             .fillMaxWidth()
                             .padding(horizontal = 20.dp),
@@ -203,18 +205,74 @@ fun SignUpScreen(
                         text = AppText.signup,
                         modifier = Modifier
                             .width(280.dp),
-                        action = {
-
-                        }
-
-
+                        action = {}
                     )
                     Spacer(
                         modifier = Modifier
                             //.fillMaxWidth()
                             .height(100.dp)
+                    )*/
+                }
+            }
+            if(uiState.isShelter) {
+                item {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                            //.padding(horizontal = 20.dp),
+                        horizontalArrangement = Arrangement.Start,
+                    ) {
+                        Text(text = "Choose your shelter's location.")
+                    }
+                    Spacer(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(30.dp)
+                    )
+
+                    //GoogleMapWithoutParentDrag({columnScrollingEnabled = true},{columnScrollingEnabled = false})
+                    val initialPos = LatLng(51.508610, -0.163611)
+                    val cameraPositionState = rememberCameraPositionState {
+                        position = CameraPosition.fromLatLngZoom(initialPos, 10f)
+                    }
+                    GoogleMap(
+                        modifier = Modifier
+                            .width(300.dp)
+                            .height(400.dp)
+                            .clip(Shapes.medium)
+                            .motionEventSpy {
+                                when (it.action) {
+                                    MotionEvent.ACTION_DOWN -> {
+                                        columnScrollingEnabled = false
+                                    }
+
+                                    MotionEvent.ACTION_UP -> {
+                                        columnScrollingEnabled = true
+                                    }
+                                }
+                            },
+                        cameraPositionState = cameraPositionState
+                    )
+
+                    Spacer(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(30.dp)
                     )
                 }
+            }
+            item {
+                BasicButton(
+                    text = AppText.signup,
+                    modifier = Modifier
+                        .width(280.dp),
+                    action = {}
+                )
+                Spacer(
+                    modifier = Modifier
+                        //.fillMaxWidth()
+                        .height(100.dp)
+                )
             }
 
         }
