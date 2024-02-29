@@ -76,12 +76,14 @@ class SignUpViewModel: ViewModel(), KoinComponent {
                     locationPermissionsState.revokedPermissions.size
         if(allPermissionsRevoked){
             locationPermissionsState.launchMultiplePermissionRequest()
+
         }
-        makeCurrentLocationCameraLocation(context)
+
+        //makeCurrentLocationCameraLocation(context)  // TODO
 
     }
     @SuppressLint("MissingPermission")
-    private fun makeCurrentLocationCameraLocation(current: Context) {
+    fun makeCurrentLocationCameraLocation(current: Context) {
         val fusedLocationClient = LocationServices
             .getFusedLocationProviderClient(current)
         Log.i("makeCurrentLocationCameraLocation", "loc not found yet")

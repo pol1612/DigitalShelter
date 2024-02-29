@@ -1,5 +1,6 @@
 package com.pol.sane.jove.digitalshelter.ui.screens.auth.signup
 
+import android.util.Log
 import android.view.MotionEvent
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.Arrangement
@@ -25,6 +26,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -177,7 +179,12 @@ fun SignUpScreen(
             }
             if(uiState.isShelter) {
                 item {
-
+                    LaunchedEffect(locationPermissionsState.revokedPermissions.size){
+                        if(locationPermissionsState.revokedPermissions.size == 0){
+                            Log.i("LaunchedEffect","getting location, rev perm size = ${locationPermissionsState.revokedPermissions.size}")
+                            viewModel.makeCurrentLocationCameraLocation(context)
+                        }
+                    }
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -191,12 +198,6 @@ fun SignUpScreen(
                             .fillMaxWidth()
                             .height(30.dp)
                     )
-
-                    //GoogleMapWithoutParentDrag({columnScrollingEnabled = true},{columnScrollingEnabled = false})
-                    /*val initialPos = LatLng(51.508610, -0.163611)
-                    val cameraPositionState = rememberCameraPositionState {
-                        position = CameraPosition.fromLatLngZoom(initialPos, 10f)
-                    }*/
                     val cameraPositionState = uiState.cameraLocation
                     GoogleMap(
                         modifier = Modifier
