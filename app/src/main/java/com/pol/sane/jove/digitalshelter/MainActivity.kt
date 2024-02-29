@@ -12,6 +12,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.google.android.gms.location.FusedLocationProviderClient
 import com.pol.sane.jove.digitalshelter.ui.graphs.authNavGraph
 import com.pol.sane.jove.digitalshelter.ui.screens.main.adopter.AdopterMainScreen
 import com.pol.sane.jove.digitalshelter.ui.screens.main.shelter.ShelterMainScreen

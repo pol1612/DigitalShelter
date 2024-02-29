@@ -1,14 +1,24 @@
 package com.pol.sane.jove.digitalshelter.ui.screens.auth.signup
 
+import android.annotation.SuppressLint
+import android.content.Context
+import android.location.Location
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavHostController
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.MultiplePermissionsState
+import com.google.android.gms.tasks.CancellationTokenSource
 import com.pol.sane.jove.digitalshelter.model.service.implementations.UserDetailsService
 import com.pol.sane.jove.digitalshelter.model.service.interfaces.UserServiceInterface
 import com.pol.sane.jove.digitalshelter.ui.graphs.AuthScreen
-import com.pol.sane.jove.digitalshelter.ui.screens.auth.login.LoginUiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.Priority.PRIORITY_HIGH_ACCURACY
+import com.google.android.gms.maps.model.CameraPosition
+import com.google.android.gms.maps.model.LatLng
+import com.google.maps.android.compose.CameraPositionState
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import org.koin.core.component.KoinComponent
@@ -49,12 +59,41 @@ class SignUpViewModel: ViewModel(), KoinComponent {
             it.copy(repeatedPassword = newValue)
         }
     }
-    fun onIsShelterChange(newValue: Boolean){
+    @OptIn(ExperimentalPermissionsApi::class)
+    fun onIsShelterChange(
+        newValue: Boolean,
+        locationPermissionsState: MultiplePermissionsState,
+        context: Context
+    ){
 
 
-        _uiState.update { it ->
+        _uiState.update {
             it.copy(isShelter = newValue)
         }
 
+        val allPermissionsRevoked =
+            locationPermissionsState.permissions.size ==
+                    locationPermissionsState.revokedPermissions.size
+        if(allPermissionsRevoked){
+            locationPermissionsState.launchMultiplePermissionRequest()
+        }
+
+    }
+    @SuppressLint("MissingPermission")
+    private fun makeCurrentLocationCameraLocation(current: Context) {
+        val fusedLocationClient = LocationServices
+            .getFusedLocationProviderClient(current)
+        fusedLocationClient.getCurrentLocation(
+            PRIORITY_HIGH_ACCURACY,
+            CancellationTokenSource().token
+        )
+            .addOnSuccessListener {location: Location ->
+                Log.i("makeCurrentLocationCameraLocation", "loc found")
+                _uiState.update { it ->
+                    it.copy(
+                        cameraLocation = CameraPositionState(CameraPosition.fromLatLngZoom(LatLng(location.latitude, location.longitude),10f))
+                    )
+                }
+            }
     }
 }

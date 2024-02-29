@@ -40,14 +40,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.google.android.gms.maps.model.CameraPosition
-import com.google.android.gms.maps.model.LatLng
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
 
 import com.google.maps.android.compose.GoogleMap
-import com.google.maps.android.compose.rememberCameraPositionState
 import com.pol.sane.jove.digitalshelter.ui.common.BasicButton
 import com.pol.sane.jove.digitalshelter.ui.common.EmailField
 import com.pol.sane.jove.digitalshelter.ui.common.PasswordField
@@ -65,7 +62,14 @@ fun SignUpScreen(
     viewModel: SignUpViewModel = viewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsState()
+    val locationPermissionsState = rememberMultiplePermissionsState(
+        listOf(
+            android.Manifest.permission.ACCESS_COARSE_LOCATION,
+            android.Manifest.permission.ACCESS_FINE_LOCATION,
 
+            )
+    )
+    val context = LocalContext.current
     Scaffold(
         topBar = {
             TopAppBar(
@@ -155,26 +159,15 @@ fun SignUpScreen(
                             .width(200.dp))
                         Spacer(modifier = Modifier
                             .width(25.dp))
-                        val locationPermissionsState = rememberMultiplePermissionsState(
-                            listOf(
-                                android.Manifest.permission.ACCESS_COARSE_LOCATION,
-                                android.Manifest.permission.ACCESS_FINE_LOCATION,
-                                //android.Manifest.permission.ACCESS_BACKGROUND_LOCATION,
-                            )
-                        )
+
                         Switch(
                             uiState.isShelter,
                             onCheckedChange = {
-                                viewModel.onIsShelterChange(it)
-
-                                val allPermissionsRevoked =
-                                    locationPermissionsState.permissions.size ==
-                                            locationPermissionsState.revokedPermissions.size
-                                if(allPermissionsRevoked){
-                                    locationPermissionsState.launchMultiplePermissionRequest()
-                                }
-                            })
+                                viewModel.onIsShelterChange(it, locationPermissionsState, context)
+                            }
+                        )
                     }
+
                     Spacer(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -183,16 +176,15 @@ fun SignUpScreen(
                 }
             }
             if(uiState.isShelter) {
-
                 item {
 
                     Row(
                         modifier = Modifier
-                            .fillMaxWidth(),
-                            //.padding(horizontal = 20.dp),
+                            .fillMaxWidth()
+                            .padding(horizontal = 60.dp),
                         horizontalArrangement = Arrangement.Start,
                     ) {
-                        Text(text = "Choose your shelter's location.")
+                        Text(text = "Click to pick your shelter's location.")
                     }
                     Spacer(
                         modifier = Modifier
@@ -201,10 +193,11 @@ fun SignUpScreen(
                     )
 
                     //GoogleMapWithoutParentDrag({columnScrollingEnabled = true},{columnScrollingEnabled = false})
-                    val initialPos = LatLng(51.508610, -0.163611)
+                    /*val initialPos = LatLng(51.508610, -0.163611)
                     val cameraPositionState = rememberCameraPositionState {
                         position = CameraPosition.fromLatLngZoom(initialPos, 10f)
-                    }
+                    }*/
+                    val cameraPositionState = uiState.cameraLocation
                     GoogleMap(
                         modifier = Modifier
                             .width(300.dp)
@@ -246,8 +239,7 @@ fun SignUpScreen(
             }
 
         }
-
-        }
+    }
 }
 
 
