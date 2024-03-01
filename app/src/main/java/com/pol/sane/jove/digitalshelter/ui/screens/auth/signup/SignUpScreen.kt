@@ -1,5 +1,7 @@
 package com.pol.sane.jove.digitalshelter.ui.screens.auth.signup
 
+import android.graphics.Bitmap
+import android.graphics.drawable.Icon
 import android.util.Log
 import android.view.MotionEvent
 import androidx.compose.foundation.ScrollState
@@ -15,6 +17,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -45,8 +49,11 @@ import androidx.navigation.NavHostController
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 
 import com.google.maps.android.compose.GoogleMap
+import com.google.maps.android.compose.Marker
+import com.google.maps.android.compose.MarkerState
 import com.pol.sane.jove.digitalshelter.ui.common.BasicButton
 import com.pol.sane.jove.digitalshelter.ui.common.EmailField
 import com.pol.sane.jove.digitalshelter.ui.common.PasswordField
@@ -180,7 +187,7 @@ fun SignUpScreen(
             if(uiState.isShelter) {
                 item {
                     LaunchedEffect(locationPermissionsState.revokedPermissions.size){
-                        if(locationPermissionsState.revokedPermissions.size == 0){
+                        if(locationPermissionsState.revokedPermissions.isEmpty()){
                             Log.i("LaunchedEffect","getting location, rev perm size = ${locationPermissionsState.revokedPermissions.size}")
                             viewModel.makeCurrentLocationCameraLocation(context)
                         }
@@ -198,7 +205,7 @@ fun SignUpScreen(
                             .fillMaxWidth()
                             .height(30.dp)
                     )
-                    val cameraPositionState = uiState.cameraLocation
+                    val cameraPositionState = uiState.cameraPositionState
                     GoogleMap(
                         modifier = Modifier
                             .width(300.dp)
@@ -215,8 +222,17 @@ fun SignUpScreen(
                                     }
                                 }
                             },
-                        cameraPositionState = cameraPositionState
-                    )
+                        cameraPositionState = cameraPositionState,
+                        onMapClick = { viewModel.onMapClick(it) }
+                    ){
+                        Marker(
+                            state = MarkerState(position = uiState.shelterLocation),
+                            title = "",
+                            snippet = "",
+                            visible = uiState.hasShelterLocationMarkerBeenPlaced
+
+                        )
+                    }
 
                     Spacer(
                         modifier = Modifier

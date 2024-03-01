@@ -10,8 +10,8 @@ data class SignUpUiState(
     val password: String = "",
     val repeatedPassword: String = "",
     val isShelter: Boolean = false,
-    val cameraLocation: CameraPositionState = CameraPositionState(CameraPosition.fromLatLngZoom(LatLng(51.508610, -0.163611),10f)),
+    val hasShelterLocationMarkerBeenPlaced: Boolean = false,
+    val cameraPositionState: CameraPositionState = CameraPositionState(CameraPosition.fromLatLngZoom(LatLng(51.508610, -0.163611),10f)),
     val shelterLocation: LatLng = LatLng(0.0,0.0),
-){
 
-}
+    )

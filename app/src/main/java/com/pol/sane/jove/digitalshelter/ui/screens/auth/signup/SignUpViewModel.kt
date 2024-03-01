@@ -93,11 +93,23 @@ class SignUpViewModel: ViewModel(), KoinComponent {
         )
             .addOnSuccessListener {location: Location ->
                 Log.i("makeCurrentLocationCameraLocation", "loc found")
-                _uiState.update { it ->
+                _uiState.update {
                     it.copy(
-                        cameraLocation = CameraPositionState(CameraPosition.fromLatLngZoom(LatLng(location.latitude, location.longitude),10f))
+                        cameraPositionState = CameraPositionState(CameraPosition.fromLatLngZoom(LatLng(location.latitude, location.longitude),10f))
                     )
                 }
             }
+    }
+
+    fun onMapClick(newShelterLocation: LatLng) {
+        Log.i("SignUpViewModel::onMapClick","new shelter location")
+        if (!_uiState.value.hasShelterLocationMarkerBeenPlaced){
+            _uiState.update {
+                it.copy( hasShelterLocationMarkerBeenPlaced = true)
+            }
+        }
+        _uiState.update {
+            it.copy( shelterLocation = newShelterLocation)
+        }
     }
 }
