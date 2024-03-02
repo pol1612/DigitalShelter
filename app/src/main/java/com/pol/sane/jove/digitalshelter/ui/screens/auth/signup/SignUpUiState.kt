@@ -9,8 +9,10 @@ data class SignUpUiState(
     val email: String = "",
     val password: String = "",
     val repeatedPassword: String = "",
+    val snackBarText: String = "",
+    val isSignUpButtonEnabled: Boolean = false,
     val isShelter: Boolean = false,
-    val hasShelterLocationMarkerBeenPlaced: Boolean = false,
+    val hasShelterLocationMarkerBeenPlacedOnce: Boolean = false,
     val cameraPositionState: CameraPositionState = CameraPositionState(CameraPosition.fromLatLngZoom(LatLng(51.508610, -0.163611),10f)),
     val shelterLocation: LatLng = LatLng(0.0,0.0),
 

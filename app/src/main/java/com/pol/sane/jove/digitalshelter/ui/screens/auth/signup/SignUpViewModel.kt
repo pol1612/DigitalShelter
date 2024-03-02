@@ -43,21 +43,25 @@ class SignUpViewModel: ViewModel(), KoinComponent {
         _uiState.update { it ->
             it.copy(username = newValue)
         }
+        checkIfTextFieldsAreNotEmptyAndEnableSignUpButton()
     }
     fun onEmailChange(newValue: String){
         _uiState.update { it ->
             it.copy(email = newValue)
         }
+        checkIfTextFieldsAreNotEmptyAndEnableSignUpButton()
     }
     fun onPasswordChange(newValue: String){
         _uiState.update { it ->
             it.copy(password = newValue)
         }
+        checkIfTextFieldsAreNotEmptyAndEnableSignUpButton()
     }
     fun onRepeatedPasswordChange(newValue: String){
         _uiState.update { it ->
             it.copy(repeatedPassword = newValue)
         }
+        checkIfTextFieldsAreNotEmptyAndEnableSignUpButton()
     }
     @OptIn(ExperimentalPermissionsApi::class)
     fun onIsShelterChange(
@@ -78,7 +82,7 @@ class SignUpViewModel: ViewModel(), KoinComponent {
             locationPermissionsState.launchMultiplePermissionRequest()
 
         }
-
+        checkIfTextFieldsAreNotEmptyAndEnableSignUpButton()
         //makeCurrentLocationCameraLocation(context)  // TODO
 
     }
@@ -103,13 +107,35 @@ class SignUpViewModel: ViewModel(), KoinComponent {
 
     fun onMapClick(newShelterLocation: LatLng) {
         Log.i("SignUpViewModel::onMapClick","new shelter location")
-        if (!_uiState.value.hasShelterLocationMarkerBeenPlaced){
+        if (!_uiState.value.hasShelterLocationMarkerBeenPlacedOnce){
             _uiState.update {
-                it.copy( hasShelterLocationMarkerBeenPlaced = true)
+                it.copy( hasShelterLocationMarkerBeenPlacedOnce = true)
             }
         }
         _uiState.update {
             it.copy( shelterLocation = newShelterLocation)
+        }
+        checkIfTextFieldsAreNotEmptyAndEnableSignUpButton()
+    }
+
+    fun onSignUpClick() {
+
+    }
+    private fun checkIfTextFieldsAreNotEmptyAndEnableSignUpButton(){
+        val textFieldsValues: Array<String> = arrayOf(
+            _uiState.value.username,
+            _uiState.value.email,
+            _uiState.value.password,
+            _uiState.value.repeatedPassword
+        )
+        var shouldSignUpButtonBeEnabled = textFieldsValues.all { it.isNotBlank() }
+        if (_uiState.value.isShelter){
+            shouldSignUpButtonBeEnabled = _uiState.value.hasShelterLocationMarkerBeenPlacedOnce && shouldSignUpButtonBeEnabled
+        }
+        _uiState.update {
+            it.copy(
+                isSignUpButtonEnabled = shouldSignUpButtonBeEnabled
+            )
         }
     }
 }

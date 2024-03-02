@@ -64,7 +64,6 @@ fun LoginScreen(
     navHostController: NavHostController
 ){
     val uiState by viewModel.uiState.collectAsState()
-    val coroutineScope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
 
 
