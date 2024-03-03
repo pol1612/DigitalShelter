@@ -12,30 +12,47 @@ class UserDetailsService(
     private val auth: FirebaseAuth
 ) : UserDetailsServiceInterface {
 
-   override val currentUserUserDetails: UserDetails
+     val USER_DETAILS_COLLECTION: String = "userDetails"
+     val USER_DETAILS_FIELD_AUTH_USER_ID: String = "authUserId"
+     val USER_DETAILS_FIELD_USER_NAME: String = "userName"
+     val USER_DETAILS_FIELD_IS_SHELTER: String = "isUserShelter"
+     val USER_DETAILS_FIELD_SHELTER_LOCATION: String = "shelterLocation"
+    override suspend fun getCurrentUserUserDetails(): UserDetails? {
+        var result: UserDetails? = null
+        try {
+            if (auth.currentUser != null){
+                var querySnapshot = database.collection(USER_DETAILS_COLLECTION)
+                    .whereEqualTo(USER_DETAILS_FIELD_AUTH_USER_ID, auth.currentUser!!.uid)
+                    .get()
+                    .await()
+                if(!querySnapshot.documents.isEmpty()){
+                    result = querySnapshot.documents[0].toObject(UserDetails::class.java)
+                }
+            }
+        } catch (e: Exception){
+
+            Log.d("UserDetailsService::getCurrentUserUserDetails::failure", e.message ?: "Unknown error")
+        }
+        return result
+
+    }
+    /*override val currentUserUserDetails: UserDetails?
         get() {
-            var result = UserDetails()
+            var result: UserDetails? = null
             if(auth.currentUser != null){
 
-                database.collection("UserDetails")
-                    .whereEqualTo("userId",auth.currentUser!!.uid).get()
+                database.collection(USER_DETAILS_COLLECTION)
+                    .whereEqualTo(USER_DETAILS_FIELD_AUTH_USER_ID, auth.currentUser!!.uid).get()
                     .addOnFailureListener { task ->
-                        Log.d("UserDetailsService::currentUserUserDetails","${task.message}")
+                        Log.d("UserDetailsService::currentUserUserDetails::failure","${task.message}")
                     }
                     .addOnSuccessListener { task ->
-                        result = task.documents.get(0).toObject(UserDetails::class.java)!!
+                        result = task.documents[0].toObject(UserDetails::class.java)!!
 
                     }
             }
             return result
-        }
-    override fun loadCurrentUserUserDetailsIntoApp() {
-        TODO("Not yet implemented")
-    }
-
-    override fun unloadCurrentUserUserDetailsFromApp() {
-        TODO("Not yet implemented")
-    }
+        }*/
 
     override fun createUserDetails(userDetails: UserDetails) {
         TODO("Not yet implemented")
@@ -47,5 +64,21 @@ class UserDetailsService(
 
     override fun deleteCurrentUserUserDetails(id: String) {
         TODO("Not yet implemented")
+    }
+
+    override fun checkIfUserNameIsTaken(userName: String): Boolean {
+        var isUserNameTaken = false
+        database.collection(USER_DETAILS_COLLECTION)
+            .whereEqualTo(USER_DETAILS_FIELD_USER_NAME,userName).get()
+            .addOnFailureListener {
+                Log.i("UserDetailsService::checkIfUserNameIsTaken::failure", "${it.message}")
+            }
+            .addOnSuccessListener { task ->
+                if (task.documents.size != 0){
+                    isUserNameTaken = true
+                    Log.i("UserDetailsService::checkIfUserNameIsTaken::success", "userName taken")
+                }
+            }
+        return isUserNameTaken
     }
 }

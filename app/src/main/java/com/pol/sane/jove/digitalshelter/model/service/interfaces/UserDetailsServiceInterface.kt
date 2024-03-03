@@ -4,14 +4,13 @@ import com.pol.sane.jove.digitalshelter.model.service.UserDetails
 
 interface UserDetailsServiceInterface {
 
-    val currentUserUserDetails: UserDetails
-
-    fun loadCurrentUserUserDetailsIntoApp()
-    fun unloadCurrentUserUserDetailsFromApp()
+   suspend fun getCurrentUserUserDetails(): UserDetails?
 
     fun createUserDetails(userDetails: UserDetails)
 
     fun getUserDetails(id: String)
 
     fun deleteCurrentUserUserDetails(id: String)
+
+    fun checkIfUserNameIsTaken(userName: String): Boolean
 }

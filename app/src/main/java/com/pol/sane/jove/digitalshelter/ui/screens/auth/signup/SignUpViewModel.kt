@@ -5,6 +5,7 @@ import android.content.Context
 import android.location.Location
 import android.util.Log
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.MultiplePermissionsState
@@ -19,15 +20,18 @@ import com.google.android.gms.location.Priority.PRIORITY_HIGH_ACCURACY
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.CameraPositionState
+import com.pol.sane.jove.digitalshelter.model.service.UserDetails
+import com.pol.sane.jove.digitalshelter.model.service.interfaces.UserDetailsServiceInterface
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class SignUpViewModel: ViewModel(), KoinComponent {
 
     private val userService: UserServiceInterface by inject()
-    private val userDetailsService: UserDetailsService by inject()
+    private val userDetailsService: UserDetailsServiceInterface by inject()
 
 
     private val  _uiState = MutableStateFlow(SignUpUiState())
@@ -41,7 +45,7 @@ class SignUpViewModel: ViewModel(), KoinComponent {
     }
     fun onUsernameChange(newValue: String){
         _uiState.update { it ->
-            it.copy(username = newValue)
+            it.copy(userName = newValue)
         }
         checkIfTextFieldsAreNotEmptyAndEnableSignUpButton()
     }
@@ -119,11 +123,22 @@ class SignUpViewModel: ViewModel(), KoinComponent {
     }
 
     fun onSignUpClick() {
-
+        //TODO check if userDetail with such username already exists; if true -> snackbar
+        //TODO check if email is email; if false -> snackbar
+        //TODO check if passwords are the same; if false -> snackbar
+        //TODO check if email already exists as auth user; if true -> snackbar
+        //TODO create auth user
+        //TODO create userDetails with authUser id and values from the uiState
+        //userDetailsService.checkIfUserNameIsTaken(_uiState.value.userName)
+        Log.i("auth", "  ${userService.currentUser.email}")
+        viewModelScope.launch {
+            val currentUserUserDetails: UserDetails? = userDetailsService.getCurrentUserUserDetails()
+            Log.i("onSignUpClick", "${currentUserUserDetails?.userName}")
+        }
     }
     private fun checkIfTextFieldsAreNotEmptyAndEnableSignUpButton(){
         val textFieldsValues: Array<String> = arrayOf(
-            _uiState.value.username,
+            _uiState.value.userName,
             _uiState.value.email,
             _uiState.value.password,
             _uiState.value.repeatedPassword

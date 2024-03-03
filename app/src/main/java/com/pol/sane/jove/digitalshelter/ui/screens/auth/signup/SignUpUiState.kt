@@ -5,7 +5,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.CameraPositionState
 
 data class SignUpUiState(
-    val username: String = "",
+    val userName: String = "",
     val email: String = "",
     val password: String = "",
     val repeatedPassword: String = "",

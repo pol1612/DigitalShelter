@@ -4,6 +4,7 @@ import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.pol.sane.jove.digitalshelter.model.service.User
 import com.pol.sane.jove.digitalshelter.model.service.interfaces.UserServiceInterface
+import kotlinx.coroutines.tasks.await
 
 class UserService(private val auth: FirebaseAuth): UserServiceInterface {
     override val  currentUser: User
@@ -28,7 +29,6 @@ class UserService(private val auth: FirebaseAuth): UserServiceInterface {
         var userHasBeenAuthenticated = false
         Log.i("AccountService::authenticate","login service method")
         auth.signInWithEmailAndPassword(email, password)
-
             .addOnFailureListener { task ->
                 Log.i("UserService::authenticate::failure", "${task.message}")
 

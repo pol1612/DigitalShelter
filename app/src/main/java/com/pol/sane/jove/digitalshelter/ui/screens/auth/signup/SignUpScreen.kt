@@ -122,7 +122,7 @@ fun SignUpScreen(
                             .height(90.dp)
                     )
                     UsernameField(
-                        value = uiState.username,
+                        value = uiState.userName,
                         onNewValue = {viewModel.onUsernameChange(it)})
                     Spacer(
                         modifier = Modifier
