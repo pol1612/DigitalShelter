@@ -133,7 +133,7 @@ class SignUpViewModel: ViewModel(), KoinComponent {
         Log.i("auth", "  ${userService.currentUser.email}")
         viewModelScope.launch {
             val currentUserUserDetails: UserDetails? = userDetailsService.getCurrentUserUserDetails()
-            Log.i("onSignUpClick", "${currentUserUserDetails?.userName}")
+            Log.i("onSignUpClick", "${currentUserUserDetails?.id}")
         }
     }
     private fun checkIfTextFieldsAreNotEmptyAndEnableSignUpButton(){

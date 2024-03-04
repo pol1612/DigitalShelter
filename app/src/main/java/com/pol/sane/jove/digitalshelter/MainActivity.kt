@@ -43,7 +43,7 @@ fun DigitalShelter(
     navController: NavHostController = rememberNavController()){
         NavHost(
             navController = navController,
-            startDestination = RootGraph.AUTHENTICATION
+            startDestination = RootGraph.AUTHENTICATION //TODO
         )
         {
             authNavGraph(navHostController = navController)
