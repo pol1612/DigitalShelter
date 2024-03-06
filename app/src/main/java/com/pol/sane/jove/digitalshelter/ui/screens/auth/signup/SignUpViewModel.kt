@@ -19,12 +19,14 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority.PRIORITY_HIGH_ACCURACY
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
+import com.google.firebase.firestore.GeoPoint
 import com.google.maps.android.compose.CameraPositionState
 import com.pol.sane.jove.digitalshelter.model.service.UserDetails
 import com.pol.sane.jove.digitalshelter.model.service.interfaces.UserDetailsServiceInterface
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import org.apache.commons.validator.routines.EmailValidator
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -123,18 +125,87 @@ class SignUpViewModel: ViewModel(), KoinComponent {
     }
 
     fun onSignUpClick() {
-        //TODO check if userDetail with such username already exists; if true -> snackbar
-        //TODO check if email is email; if false -> snackbar
         //TODO check if passwords are the same; if false -> snackbar
-        //TODO check if email already exists as auth user; if true -> snackbar
         //TODO create auth user
         //TODO create userDetails with authUser id and values from the uiState
         //userDetailsService.checkIfUserNameIsTaken(_uiState.value.userName)
         Log.i("auth", "  ${userService.currentUser.email}")
+
         viewModelScope.launch {
-            val currentUserUserDetails: UserDetails? = userDetailsService.getCurrentUserUserDetails()
-            Log.i("onSignUpClick", "${currentUserUserDetails?.id}")
+
+            // check if userDetail with such username already exists; if true -> snackbar
+            val isUseNameTaken: Boolean = userDetailsService.checkIfUserNameIsTaken(_uiState.value.userName)
+            if(isUseNameTaken){
+                _uiState.update {
+                    it.copy(
+                        snackBarText = "The username is already taken."
+                    )
+                }
+            }
+            // check if email is email if the last check (username taken) passed; if false -> snackbar
+            if(_uiState.value.snackBarText.isEmpty()){
+                //username not taken
+                val isEmailValid = EmailValidator.getInstance().isValid(_uiState.value.email)
+                if (!isEmailValid) {
+                    _uiState.update {
+                        it.copy(
+                            snackBarText = "The email is wrongly formatted."
+                        )
+                    }
+                }
+            }
+            if (_uiState.value.snackBarText.isEmpty()){
+                if(!_uiState.value.password.equals(_uiState.value.repeatedPassword)){
+                    _uiState.update {
+                        it.copy(
+                            snackBarText = "The passwords must be the same."
+                        )
+                    }
+                }
+            }
+            //checks if string is alphanumerical
+            if (_uiState.value.snackBarText.isEmpty()){
+                if(!_uiState.value.password.matches("[a-zA-Z0-9]+".toRegex())){
+                    _uiState.update {
+                        it.copy(
+                            snackBarText = "The password must only contain letters and numbers, not special symbols."
+                        )
+                    }
+                }
+            }
+            //create auth user
+            if (_uiState.value.snackBarText.isEmpty()){
+                userService.createUser(
+                    email = _uiState.value.email,
+                    password = _uiState.value.password,
+                    setSnackbarText = {text -> _uiState.update { it.copy(
+                        snackBarText = text
+                    ) }
+                    }
+                )
+            }
+            //create userDetails object of current auth user
+            if (_uiState.value.snackBarText.isEmpty()){
+                userDetailsService.createUserDetails(
+                    userDetails =  UserDetails(
+                        authUserId = userService.currentUser.id,
+                        userName = _uiState.value.userName,
+                        isUserShelter = _uiState.value.isShelter,
+                        shelterLocation = GeoPoint(
+                            _uiState.value.shelterLocation.latitude,
+                            _uiState.value.shelterLocation.longitude
+                        )
+                    ),
+                    setSnackbarText = { text -> _uiState.update { it.copy(snackBarText = text) } }
+
+                )
+            }
+
+            //_uiState.update { it.copy(snackBarText = "") }
+
+        //TODO repair snackbar the text is changed but the snackbar doesn't appear
         }
+
     }
     private fun checkIfTextFieldsAreNotEmptyAndEnableSignUpButton(){
         val textFieldsValues: Array<String> = arrayOf(
@@ -152,5 +223,9 @@ class SignUpViewModel: ViewModel(), KoinComponent {
                 isSignUpButtonEnabled = shouldSignUpButtonBeEnabled
             )
         }
+    }
+
+    fun setSnackbarText(newValue: String) {
+        _uiState.update { it.copy(snackBarText = newValue) }
     }
 }

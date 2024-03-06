@@ -1,6 +1,7 @@
 package com.pol.sane.jove.digitalshelter.model.service.implementations
 
 import android.util.Log
+import android.widget.ExpandableListView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
@@ -37,13 +38,8 @@ class UserDetailsService(
                     if((!id.isNullOrEmpty()) && (isUserShelter != null)){
                         Log.i("bol ", "${isUserShelter}")
                         Log.i("id ", "${doc?.id}")
-                        currentUserUserDetails = currentUserUserDetails?.copy(
-                            isUserShelter = isUserShelter,
-                            id = id
-                        )
                     }
                     Log.i("getCurrentUserUserDetails::result",
-                        "${currentUserUserDetails?.id} " +
                             "${currentUserUserDetails?.authUserId} " +
                             "${currentUserUserDetails?.userName} " +
                             "${currentUserUserDetails?.isUserShelter.toString()} " +
@@ -58,8 +54,18 @@ class UserDetailsService(
         return currentUserUserDetails
     }
 
-    override fun createUserDetails(userDetails: UserDetails) {
-        TODO("Not yet implemented")
+    override suspend fun createUserDetails(userDetails: UserDetails, setSnackbarText: (String) -> Unit) {
+        try {
+            var result = database.collection(USER_DETAILS_COLLECTION)
+                .add(userDetails)
+                .await()
+            setSnackbarText("User successfully registered.")
+        }catch (e: Exception){
+            Log.i(" createUserDetails::exception", "message: ${e.message}")
+            auth.currentUser?.delete()?.await()
+            Log.i(" createUserDetails::exception", "current user deleted")
+        }
+
     }
 
     override fun getUserDetails(id: String) {
@@ -70,19 +76,18 @@ class UserDetailsService(
         TODO("Not yet implemented")
     }
 
-    override fun checkIfUserNameIsTaken(userName: String): Boolean {
+    suspend override fun checkIfUserNameIsTaken(userName: String): Boolean {
         var isUserNameTaken = false
-        database.collection(USER_DETAILS_COLLECTION)
-            .whereEqualTo(USER_DETAILS_FIELD_USER_NAME,userName).get()
-            .addOnFailureListener {
-                Log.i("UserDetailsService::checkIfUserNameIsTaken::failure", "${it.message}")
-            }
-            .addOnSuccessListener { task ->
-                if (task.documents.size != 0){
-                    isUserNameTaken = true
-                    Log.i("UserDetailsService::checkIfUserNameIsTaken::success", "userName taken")
-                }
-            }
+
+        var querySnapshot = database.collection(USER_DETAILS_COLLECTION)
+            .whereEqualTo(USER_DETAILS_FIELD_USER_NAME,userName)
+            .get()
+            .await()
+
+        if(!querySnapshot.documents.isEmpty()){
+            isUserNameTaken = true
+        }
+        Log.i("UserDetailsService::checkIfUserNameIsTaken","${isUserNameTaken}")
         return isUserNameTaken
     }
 }

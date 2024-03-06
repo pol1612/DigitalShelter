@@ -6,11 +6,11 @@ interface UserDetailsServiceInterface {
 
    suspend fun getCurrentUserUserDetails(): UserDetails?
 
-    fun createUserDetails(userDetails: UserDetails)
+    suspend fun createUserDetails(userDetails: UserDetails, setSnackbarText: (String) -> Unit)
 
     fun getUserDetails(id: String)
 
     fun deleteCurrentUserUserDetails(id: String)
 
-    fun checkIfUserNameIsTaken(userName: String): Boolean
+    suspend fun checkIfUserNameIsTaken(userName: String): Boolean
 }

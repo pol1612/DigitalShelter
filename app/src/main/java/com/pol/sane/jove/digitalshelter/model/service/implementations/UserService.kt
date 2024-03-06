@@ -2,6 +2,9 @@ package com.pol.sane.jove.digitalshelter.model.service.implementations
 
 import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException
 import com.pol.sane.jove.digitalshelter.model.service.User
 import com.pol.sane.jove.digitalshelter.model.service.interfaces.UserServiceInterface
 import kotlinx.coroutines.tasks.await
@@ -10,22 +13,38 @@ class UserService(private val auth: FirebaseAuth): UserServiceInterface {
     override val  currentUser: User
         get() = User(auth.currentUser?.uid,auth.currentUser?.email)
 
-    override fun createAccountAndAuthenticate(email: String, password: String, setViewModelSnackbarText: (String) -> Unit): Boolean {
-        var userHasBeenSignedUpAndAuthenticated = false
-        Log.i("AccountService::createAccountAndAuthenticate","signUp service method")
-        auth.createUserWithEmailAndPassword(email,password)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    Log.i("AccountService::createAccountAndAuthenticate::success","signUp realized")
-                    //userHasBeenSignedUpAndAuthenticated = authenticate(email, password, setViewModelSnackbarText)
-                } else {
-                    Log.i("AccountService::createAccountAndAuthenticate::failure",task.exception?.message ?: "An unknown error occurred")
-                }
-            }
-        return userHasBeenSignedUpAndAuthenticated
+    override suspend fun createUser(
+        email: String,
+        password: String,
+        setSnackbarText: (String) -> Unit
+    ) {
+        try {
+            auth.createUserWithEmailAndPassword(email, password).await()
+
+        } catch (e: FirebaseAuthWeakPasswordException) {
+            // Weak password exception
+            Log.w("UserCreation", "Weak password: ${e.message}")
+            setSnackbarText("Unable to sign-up user, the password is too insecure.")
+        } catch (e: FirebaseAuthInvalidCredentialsException) {
+            // Invalid credentials exception (e.g., malformed email, empty password)
+            Log.w("UserCreation", "Invalid credentials: ${e.message}")
+            setSnackbarText("Unable to sign-up user due to a malformed email or empty password.")
+
+        } catch (e: FirebaseAuthUserCollisionException) {
+            // User collision exception (user with same email already exists)
+            Log.w("UserCreation", "User collision: ${e.message}")
+            setSnackbarText("Unable to sign-up user due another user having the same email.")
+        } catch (e: Exception) {
+            // Other exceptions
+            Log.e("UserCreation", "Error creating user: ${e.message}")
+            setSnackbarText("Unable to sign-up user due to unknown error.")
+        } finally {
+
+        }
     }
 
-     override fun authenticate(email: String, password: String, setViewModelSnackbarText: (String) -> Unit): Boolean {
+
+    override fun authenticateUser(email: String, password: String, setViewModelSnackbarText: (String) -> Unit): Boolean {
         var userHasBeenAuthenticated = false
         Log.i("AccountService::authenticate","login service method")
         auth.signInWithEmailAndPassword(email, password)
@@ -60,6 +79,8 @@ class UserService(private val auth: FirebaseAuth): UserServiceInterface {
             }
 
     }
+
+
 
     override fun deleteCurrentAccount(): Boolean {
         auth.currentUser!!.delete()

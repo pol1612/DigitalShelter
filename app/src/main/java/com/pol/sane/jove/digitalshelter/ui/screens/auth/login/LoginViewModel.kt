@@ -1,12 +1,9 @@
 package com.pol.sane.jove.digitalshelter.ui.screens.auth.login
 
 import android.util.Log
-import android.widget.Toast
-import androidx.compose.material3.SnackbarHostState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
-import com.google.rpc.context.AttributeContext.Auth
 import com.pol.sane.jove.digitalshelter.model.service.interfaces.UserServiceInterface
 import com.pol.sane.jove.digitalshelter.ui.graphs.AuthScreen
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,7 +11,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import org.apache.commons.validator.routines.EmailValidator
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -74,7 +70,7 @@ class LoginViewModel: ViewModel(), KoinComponent {
     fun onLoginClick(navHostController: NavHostController){
         Log.i("LoginViewModel::onLoginClick", "login viewModel method")
         //Thread.sleep(10000)
-        userService.authenticate(
+        userService.authenticateUser(
             _uiState.value.email,
             _uiState.value.password
         ) { text ->

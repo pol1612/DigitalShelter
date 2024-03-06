@@ -13,7 +13,7 @@ data class SignUpUiState(
     val isSignUpButtonEnabled: Boolean = false,
     val isShelter: Boolean = false,
     val hasShelterLocationMarkerBeenPlacedOnce: Boolean = false,
-    val cameraPositionState: CameraPositionState = CameraPositionState(CameraPosition.fromLatLngZoom(LatLng(51.508610, -0.163611),10f)),
+    val cameraPositionState: CameraPositionState = CameraPositionState(CameraPosition.fromLatLngZoom(LatLng( 40.730610, -73.935242),10f)),
     val shelterLocation: LatLng = LatLng(0.0,0.0),
 
     )
