@@ -5,9 +5,9 @@ import com.pol.sane.jove.digitalshelter.model.service.User
 
 interface UserServiceInterface {
         suspend fun createUser(email: String, password: String, setSnackbarText: (String) -> Unit )
-        fun authenticateUser(email: String, password: String, setViewModelSnackbarText: (String) -> Unit): Boolean
-        fun deleteCurrentAccount(): Boolean
-        fun signOut(): Boolean
+        suspend fun authenticateUser(email: String, password: String, setViewModelSnackbarText: (String) -> Unit)
+        suspend fun deleteCurrentAccount(): Boolean
+        suspend fun signOut()
 
         val currentUser: User
         suspend fun sendRecoveryEmail(

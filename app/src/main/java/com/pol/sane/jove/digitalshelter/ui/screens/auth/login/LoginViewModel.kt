@@ -4,6 +4,8 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
+import com.pol.sane.jove.digitalshelter.RootGraph
+import com.pol.sane.jove.digitalshelter.model.service.interfaces.UserDetailsServiceInterface
 import com.pol.sane.jove.digitalshelter.model.service.interfaces.UserServiceInterface
 import com.pol.sane.jove.digitalshelter.ui.graphs.AuthScreen
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,6 +20,7 @@ import org.koin.core.component.inject
 class LoginViewModel: ViewModel(), KoinComponent {
 
     private val userService: UserServiceInterface by inject()
+    private val userDetailsService: UserDetailsServiceInterface by inject()
 
 
     private val  _uiState = MutableStateFlow(LoginUiState())
@@ -68,24 +71,38 @@ class LoginViewModel: ViewModel(), KoinComponent {
     }
 
     fun onLoginClick(navHostController: NavHostController){
-        Log.i("LoginViewModel::onLoginClick", "login viewModel method")
-        //Thread.sleep(10000)
-        userService.authenticateUser(
-            _uiState.value.email,
-            _uiState.value.password
-        ) { text ->
+        viewModelScope.launch {
+            Log.i("LoginViewModel::onLoginClick", "login viewModel method")
+            //Thread.sleep(10000)
+            userService.authenticateUser(
+                _uiState.value.email,
+                _uiState.value.password
+            ) { text ->
+                _uiState.update { it ->
+                    it.copy(
+                        snackBarText = text
+                    )
+                }
+            }
             _uiState.update { it ->
                 it.copy(
-                    snackBarText = text
+                    snackBarText = ""
                 )
             }
+            //TODO: load user details and go to shelter or adopter accordingly
+            val currUsUserDetails = userDetailsService.getCurrentUserUserDetails()
+            Log.i("onLoginClick::currUsUsDetails:isShelter","${currUsUserDetails?.isUserShelter}")
+            if(currUsUserDetails != null){
+                if (currUsUserDetails.isUserShelter == true){
+                    navHostController.popBackStack()
+                    navHostController.navigate(RootGraph.MAIN_SHELTER)
+                }else{
+                    navHostController.popBackStack()
+                    navHostController.navigate(RootGraph.MAIN_ADOPTER)
+
+                }
+            }
         }
-        _uiState.update { it ->
-            it.copy(
-                snackBarText = ""
-            )
-        }
-        //TODO: load user details and go to shelter or adopter accordingly
 
     }
 

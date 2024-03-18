@@ -1,11 +1,12 @@
-import kotlin.script.experimental.jvm.util.classpathFromClass
-
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 
 buildscript {
     extra.apply {
         set("lifecycle_version", "2.6.2")
+    }
+    repositories {
+        google()
     }
 
 }

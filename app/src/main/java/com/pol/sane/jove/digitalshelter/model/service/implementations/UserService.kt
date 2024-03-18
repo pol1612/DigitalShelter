@@ -38,59 +38,53 @@ class UserService(private val auth: FirebaseAuth): UserServiceInterface {
             // Other exceptions
             Log.e("UserCreation", "Error creating user: ${e.message}")
             setSnackbarText("Unable to sign-up user due to unknown error.")
-        } finally {
-
         }
     }
 
 
-    override fun authenticateUser(email: String, password: String, setViewModelSnackbarText: (String) -> Unit): Boolean {
-        var userHasBeenAuthenticated = false
+    override suspend fun authenticateUser(email: String, password: String, setViewModelSnackbarText: (String) -> Unit) {
         Log.i("AccountService::authenticate","login service method")
-        auth.signInWithEmailAndPassword(email, password)
-            .addOnFailureListener { task ->
-                Log.i("UserService::authenticate::failure", "${task.message}")
+        try {
+            auth.signInWithEmailAndPassword(email, password).await()
 
-                when(task.message){
-                    "The supplied auth credential is incorrect, malformed or has expired." -> { setViewModelSnackbarText("Wrong email or password credentials.") }
-                    "A network error (such as timeout, interrupted connection or unreachable host) has occurred." -> { setViewModelSnackbarText("Network error.")}
-                    else -> { setViewModelSnackbarText("Unknown error.") }
-                }
+            setViewModelSnackbarText("The user was successfully logged in.")
+
+            Log.i("AccountService::authenticate::success","login realized: ${auth.currentUser?.email.toString()}")
+        }catch(e: Exception){
+            when(e.message){
+
+                "The supplied auth credential is incorrect, malformed or has expired." -> { setViewModelSnackbarText("Wrong email or password credentials.") }
+
+                "A network error (such as timeout, interrupted connection or unreachable host) has occurred." -> { setViewModelSnackbarText("Network error.")}
+
+                else -> { setViewModelSnackbarText("Unknown error.") }
 
             }
-            .addOnSuccessListener {
-                Log.i("AccountService::authenticate::success","login realized: ${auth.currentUser?.email.toString()}")
-                userHasBeenAuthenticated = true
-                setViewModelSnackbarText("The user was successfully logged in.")
-            }
-        return userHasBeenAuthenticated
+        }
     }
 
      override suspend fun sendRecoveryEmail(email: String, setViewModelSnackbarText: (String) -> Unit){
-        auth.sendPasswordResetEmail(email)
-            .addOnFailureListener {
-                Log.i("UserService::sendRecoveryEmail::failure", "email not sent")
-                setViewModelSnackbarText("There was an error delivering the email.")
-            }
-            .addOnSuccessListener {
-                Log.i("UserService::sendRecoveryEmail::success", "email sent")
-                setViewModelSnackbarText("The email was successfully sent.")
+        try {
+            auth.sendPasswordResetEmail(email).await()
+            Log.i("UserService::sendRecoveryEmail::success", "email sent")
+            setViewModelSnackbarText("The email was successfully sent.")
 
-            }
-
+        }catch (e:Exception){
+            Log.i("UserService::sendRecoveryEmail::failure", "email not sent")
+            setViewModelSnackbarText("There was an error delivering the email.")
+        }
     }
 
 
 
-    override fun deleteCurrentAccount(): Boolean {
-        auth.currentUser!!.delete()
+    override suspend fun deleteCurrentAccount(): Boolean {
+        auth.currentUser!!.delete().await()
         return false
         //TODO
     }
 
-    override fun signOut(): Boolean {
+    override suspend fun signOut() {
         auth.signOut()
-        return false
-        //TODO
+        Log.i("signOut","user logged out")
     }
 }
