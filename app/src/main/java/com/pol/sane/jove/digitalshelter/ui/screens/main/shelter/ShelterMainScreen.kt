@@ -4,8 +4,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.AccountCircle
-import androidx.compose.material.icons.rounded.Search
-import androidx.compose.material.icons.rounded.Send
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -14,9 +12,11 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.pol.sane.jove.digitalshelter.ui.screens.main.adopter.AdopterMainScreen
+import com.pol.sane.jove.digitalshelter.R
 
 @Composable
 fun ShelterMainScreen(navController: NavHostController) {
@@ -31,7 +31,7 @@ fun ShelterMainScreen(navController: NavHostController) {
                     onClick = { /*TODO*/ },
                     icon = {
                         Icon(
-                            imageVector = Icons.Rounded.Search,
+                            painter =  painterResource(id = R.drawable.paw_icon),
                             contentDescription = null
                         )
                     }
@@ -41,7 +41,7 @@ fun ShelterMainScreen(navController: NavHostController) {
                     onClick = { /*TODO*/ },
                     icon = {
                         Icon(
-                            imageVector = Icons.Rounded.AccountCircle,
+                            painter = painterResource(id = R.drawable.user_icon),
                             contentDescription = null
                         )
                     }

@@ -2,6 +2,7 @@ package com.pol.sane.jove.digitalshelter.ui.screens.main.adopter
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.AccountCircle
 import androidx.compose.material.icons.rounded.ArrowBack
@@ -16,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 
 @Composable
@@ -32,7 +34,8 @@ fun AdopterMainScreen(navController: NavHostController) {
                     icon = {
                         Icon(
                             imageVector = Icons.Rounded.Search,
-                            contentDescription = null
+                            contentDescription = null,
+                            modifier = Modifier.size(5.dp)
                         )
                     }
                 )
