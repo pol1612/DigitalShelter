@@ -38,6 +38,9 @@ class UserDetailsService(
                     if((!id.isNullOrEmpty()) && (isUserShelter != null)){
                         Log.i("bol ", "${isUserShelter}")
                         Log.i("id ", "${doc?.id}")
+                        currentUserUserDetails = currentUserUserDetails!!.copy(
+                            isUserShelter = isUserShelter
+                        )
                     }
                     Log.i("getCurrentUserUserDetails::result",
                             "${currentUserUserDetails?.authUserId} " +
