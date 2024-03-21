@@ -47,10 +47,9 @@ class UserService(private val auth: FirebaseAuth): UserServiceInterface {
         try {
             auth.signInWithEmailAndPassword(email, password).await()
 
-            setViewModelSnackbarText("The user was successfully logged in.")
-
             Log.i("AccountService::authenticate::success","login realized: ${auth.currentUser?.email.toString()}")
         }catch(e: Exception){
+            Log.i("UserService::authenticateUser","auth login failed")
             when(e.message){
 
                 "The supplied auth credential is incorrect, malformed or has expired." -> { setViewModelSnackbarText("Wrong email or password credentials.") }
@@ -67,7 +66,7 @@ class UserService(private val auth: FirebaseAuth): UserServiceInterface {
         try {
             auth.sendPasswordResetEmail(email).await()
             Log.i("UserService::sendRecoveryEmail::success", "email sent")
-            setViewModelSnackbarText("The email was successfully sent.")
+            //setViewModelSnackbarText("The email was successfully sent.")
 
         }catch (e:Exception){
             Log.i("UserService::sendRecoveryEmail::failure", "email not sent")

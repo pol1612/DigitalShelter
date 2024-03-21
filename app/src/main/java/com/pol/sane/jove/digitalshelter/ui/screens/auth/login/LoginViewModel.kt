@@ -70,6 +70,14 @@ class LoginViewModel: ViewModel(), KoinComponent {
         }
     }
 
+    fun deleteSnackBarText(){
+        _uiState.update { currentState ->
+            currentState.copy(
+                snackBarText = ""
+            )
+        }
+    }
+
     fun onLoginClick(navHostController: NavHostController){
         viewModelScope.launch {
             Log.i("LoginViewModel::onLoginClick", "login viewModel method")
@@ -77,31 +85,32 @@ class LoginViewModel: ViewModel(), KoinComponent {
             userService.authenticateUser(
                 _uiState.value.email,
                 _uiState.value.password
-            ) { text ->
+            ) {
+                text ->
+                Log.i("setViewModelSnackbarText","snackbar text changed")
                 _uiState.update { it ->
                     it.copy(
                         snackBarText = text
                     )
                 }
             }
-            _uiState.update { it ->
-                it.copy(
-                    snackBarText = ""
-                )
-            }
-            //TODO: load user details and go to shelter or adopter accordingly
-            val currUsUserDetails = userDetailsService.getCurrentUserUserDetails()
-            Log.i("onLoginClick::currUsUsDetails:isShelter","${currUsUserDetails?.isUserShelter}")
-            if(currUsUserDetails != null){
-                if (currUsUserDetails.isUserShelter == true){
-                    navHostController.popBackStack()
-                    navHostController.navigate(RootGraph.MAIN_SHELTER)
-                }else{
-                    navHostController.popBackStack()
-                    navHostController.navigate(RootGraph.MAIN_ADOPTER)
+            Log.i("LoginViewModel::onLoginClick::snacktextAfterAuth", "${_uiState.value.snackBarText}")
+            if (_uiState.value.snackBarText.isNullOrEmpty()){
+                val currUsUserDetails = userDetailsService.getCurrentUserUserDetails()
 
+                Log.i("onLoginClick::currentUserUserDetails:isShelter","${currUsUserDetails?.isUserShelter}")
+                if(currUsUserDetails != null){
+                    if (currUsUserDetails.isUserShelter == true){
+                        navHostController.popBackStack()
+                        navHostController.navigate(RootGraph.MAIN_SHELTER)
+                    }else{
+                        navHostController.popBackStack()
+                        navHostController.navigate(RootGraph.MAIN_ADOPTER)
+
+                    }
                 }
             }
+
         }
 
     }
@@ -125,12 +134,6 @@ class LoginViewModel: ViewModel(), KoinComponent {
                     )
                 }
             }
-            _uiState.update { currentState ->
-                currentState.copy(
-                    email = ""
-                )
-            }
-
         }
 
     }

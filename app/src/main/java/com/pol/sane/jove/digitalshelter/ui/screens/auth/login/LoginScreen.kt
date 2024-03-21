@@ -147,6 +147,7 @@ fun LoginScreen(
                         )
                         if (snackbarResult == SnackbarResult.Dismissed){
                             Log.i("LoginScreen::Snackbar","dismissed")
+                            viewModel.deleteSnackBarText()
                         }
                     }
                 }

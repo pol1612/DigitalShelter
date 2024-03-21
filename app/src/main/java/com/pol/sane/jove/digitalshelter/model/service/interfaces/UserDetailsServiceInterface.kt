@@ -4,7 +4,7 @@ import com.pol.sane.jove.digitalshelter.model.service.UserDetails
 
 interface UserDetailsServiceInterface {
 
-   suspend fun getCurrentUserUserDetails(): UserDetails?
+    suspend fun getCurrentUserUserDetails(): UserDetails?
 
     suspend fun createUserDetails(userDetails: UserDetails, setSnackbarText: (String) -> Unit)
 
