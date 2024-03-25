@@ -19,6 +19,7 @@ class UserDetailsService(
      val USER_DETAILS_FIELD_USER_NAME: String = "userName"
      val USER_DETAILS_FIELD_IS_SHELTER: String = "isUserShelter"
      val USER_DETAILS_FIELD_SHELTER_LOCATION: String = "shelterLocation"
+
     override suspend fun getCurrentUserUserDetails(): UserDetails? {
         var currentUserUserDetails: UserDetails? = null
         try {
@@ -33,11 +34,9 @@ class UserDetailsService(
                     currentUserUserDetails = querySnapshot.documents[0].toObject(UserDetails::class.java)
 
                     var isUserShelter = doc?.getBoolean(USER_DETAILS_FIELD_IS_SHELTER)
-                    var id = doc?.id
 
-                    if((!id.isNullOrEmpty()) && (isUserShelter != null)){
+                    if(isUserShelter != null){
                         Log.i("bol ", "${isUserShelter}")
-                        Log.i("id ", "${doc?.id}")
                         currentUserUserDetails = currentUserUserDetails!!.copy(
                             isUserShelter = isUserShelter
                         )

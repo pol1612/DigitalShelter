@@ -98,7 +98,8 @@ class LoginViewModel: ViewModel(), KoinComponent {
             if (_uiState.value.snackBarText.isNullOrEmpty()){
                 val currUsUserDetails = userDetailsService.getCurrentUserUserDetails()
 
-                Log.i("onLoginClick::currentUserUserDetails:isShelter","${currUsUserDetails?.isUserShelter}")
+                Log.i("onLoginClick::currentUserUserDetails:isShelter",
+                    "${currUsUserDetails?.isUserShelter}")
                 if(currUsUserDetails != null){
                     if (currUsUserDetails.isUserShelter == true){
                         navHostController.popBackStack()
