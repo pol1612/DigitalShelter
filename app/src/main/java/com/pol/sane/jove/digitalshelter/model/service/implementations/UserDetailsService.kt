@@ -30,23 +30,16 @@ class UserDetailsService(
                     .await()
                 if(!querySnapshot.documents.isEmpty()){
                     var doc: DocumentSnapshot? = querySnapshot.documents[0]
-                    Log.i("getCurrentUserUserDetails::delay","10 seconds")
+
                     currentUserUserDetails = querySnapshot.documents[0].toObject(UserDetails::class.java)
 
                     var isUserShelter = doc?.getBoolean(USER_DETAILS_FIELD_IS_SHELTER)
 
                     if(isUserShelter != null){
-                        Log.i("bol ", "${isUserShelter}")
                         currentUserUserDetails = currentUserUserDetails!!.copy(
                             isUserShelter = isUserShelter
                         )
                     }
-                    Log.i("getCurrentUserUserDetails::result",
-                            "${currentUserUserDetails?.authUserId} " +
-                            "${currentUserUserDetails?.userName} " +
-                            "${currentUserUserDetails?.isUserShelter.toString()} " +
-                            "${currentUserUserDetails?.shelterLocation?.latitude.toString()}")
-
                 }
             }
         } catch (e: Exception){
