@@ -65,15 +65,6 @@ fun DigitalShelter(
     }
 }
 
-@Composable
-fun DigitalShelterTopBar(){
-
-}
-@Composable
-fun DigitalShelterBottomBar(){
-
-}
-
 object RootGraph {
 
     const val START = "start"

@@ -1,6 +1,6 @@
 
 
-package com.pol.sane.jove.digitalshelter.ui.common
+package com.pol.sane.jove.digitalshelter.ui.common.composables
 
 import androidx.annotation.StringRes
 import androidx.compose.material.*

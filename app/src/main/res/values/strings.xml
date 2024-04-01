@@ -13,5 +13,7 @@
     <string name="signup">SignUp</string>
     <string name="username">Username</string>
     <string name="not_registered_click_here_to_sign_up">Not registered? Click to sign up</string>
+    <string name="dog_paw_icon_content_description">Dog paw icon; when clicked it shows the shelter\'s dog list</string>
+    <string name="user_icon_content_description">User icon; when clicked it shows the user settings</string>
 
 </resources>

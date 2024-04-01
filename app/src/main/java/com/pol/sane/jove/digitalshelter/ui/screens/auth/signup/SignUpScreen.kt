@@ -53,11 +53,11 @@ import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerState
-import com.pol.sane.jove.digitalshelter.ui.common.BasicButton
-import com.pol.sane.jove.digitalshelter.ui.common.EmailField
-import com.pol.sane.jove.digitalshelter.ui.common.PasswordField
-import com.pol.sane.jove.digitalshelter.ui.common.RepeatPasswordField
-import com.pol.sane.jove.digitalshelter.ui.common.UsernameField
+import com.pol.sane.jove.digitalshelter.ui.common.composables.BasicButton
+import com.pol.sane.jove.digitalshelter.ui.common.composables.EmailField
+import com.pol.sane.jove.digitalshelter.ui.common.composables.PasswordField
+import com.pol.sane.jove.digitalshelter.ui.common.composables.RepeatPasswordField
+import com.pol.sane.jove.digitalshelter.ui.common.composables.UsernameField
 import com.pol.sane.jove.digitalshelter.ui.theme.Shapes
 import com.pol.sane.jove.digitalshelter.R.string as AppText
 

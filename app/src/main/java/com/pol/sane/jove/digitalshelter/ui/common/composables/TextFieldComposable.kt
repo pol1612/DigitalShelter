@@ -1,9 +1,8 @@
 
-package com.pol.sane.jove.digitalshelter.ui.common
+package com.pol.sane.jove.digitalshelter.ui.common.composables
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
@@ -19,7 +18,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import com.pol.sane.jove.digitalshelter.R
 import com.pol.sane.jove.digitalshelter.R.drawable as AppIcon
 import com.pol.sane.jove.digitalshelter.R.string as AppText
 
