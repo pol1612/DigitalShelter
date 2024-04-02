@@ -32,12 +32,12 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 
 import androidx.navigation.NavHostController
-import com.pol.sane.jove.digitalshelter.ui.common.composables.BasicTextButton
+import com.pol.sane.jove.digitalshelter.ui.common.composables.simples.BasicTextButton
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import com.pol.sane.jove.digitalshelter.ui.common.composables.BasicButton
-import com.pol.sane.jove.digitalshelter.ui.common.composables.EmailField
-import com.pol.sane.jove.digitalshelter.ui.common.composables.PasswordField
+import com.pol.sane.jove.digitalshelter.ui.common.composables.simples.BasicButton
+import com.pol.sane.jove.digitalshelter.ui.common.composables.simples.EmailField
+import com.pol.sane.jove.digitalshelter.ui.common.composables.simples.PasswordField
 import android.util.Log
 import com.pol.sane.jove.digitalshelter.R.string as AppText
 

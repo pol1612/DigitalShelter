@@ -15,5 +15,9 @@
     <string name="not_registered_click_here_to_sign_up">Not registered? Click to sign up</string>
     <string name="dog_paw_icon_content_description">Dog paw icon; when clicked it shows the shelter\'s dog list</string>
     <string name="user_icon_content_description">User icon; when clicked it shows the user settings</string>
+    <string name="user_settings">User settings</string>
+    <string name="log_out">Log out</string>
+    <string name="delete_account_permanently">Delete account permanently</string>
+    <string name="send_password_revovery_email">Send password revovery email</string>
 
 </resources>

@@ -1,4 +1,4 @@
-package com.pol.sane.jove.digitalshelter.ui.common.composables
+package com.pol.sane.jove.digitalshelter.ui.common.composables.simples
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box

@@ -17,6 +17,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.pol.sane.jove.digitalshelter.R
+import com.pol.sane.jove.digitalshelter.ui.common.composables.screens.UserSettingsScreen
 import com.pol.sane.jove.digitalshelter.ui.common.extensions.AddBottBarNavItem
 import com.pol.sane.jove.digitalshelter.ui.graphs.shelterMainDogsNavGraph
 
@@ -62,7 +63,7 @@ fun ShelterMainScreen(
                 shelterMainDogsNavGraph(ShelterMainScreenComposables.Dogs.route)
 
                 composable(ShelterMainScreenComposables.User.route){
-
+                    //UserSettingsScreen()
                 }
             }
         }

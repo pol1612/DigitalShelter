@@ -1,5 +1,5 @@
 
-package com.pol.sane.jove.digitalshelter.ui.common.composables
+package com.pol.sane.jove.digitalshelter.ui.common.composables.simples
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.text.KeyboardOptions
