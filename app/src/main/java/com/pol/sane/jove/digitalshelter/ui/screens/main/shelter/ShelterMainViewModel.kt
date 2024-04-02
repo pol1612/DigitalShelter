@@ -17,6 +17,7 @@ class ShelterMainViewModel: ViewModel(), KoinComponent{
     fun onDogPawIconClick(navController: NavHostController) {
         Log.i("onDogPawIconClick","start")
         if(_uiState.value.selectedIcon != 0){
+            navController.popBackStack()
             navController.navigate(ShelterMainScreenComposables.Dogs.route)
             _uiState.update { it.copy(selectedIcon = 0) }
             Log.i("onDogPawIconClick", "Went from dog paw icon and dog list screen to user icon and user screen")
@@ -26,10 +27,17 @@ class ShelterMainViewModel: ViewModel(), KoinComponent{
     fun onUserIconClick(navController: NavHostController) {
         Log.i("onUserIconClick","start")
         if(_uiState.value.selectedIcon != 1){
+            navController.popBackStack()
             navController.navigate(ShelterMainScreenComposables.User.route)
             _uiState.update { it.copy(selectedIcon = 1) }
             Log.i("onUserIconClick", "Went from user icon and user screen to dog paw icon and dog list screen")
-
+        }
+    }
+    fun onIconClick(navController: NavHostController, route: String, iconNumber: Int){
+        if(_uiState.value.selectedIcon != iconNumber){
+            navController.popBackStack()
+            navController.navigate(route)
+            _uiState.update { it.copy(selectedIcon = iconNumber) }
         }
     }
 

@@ -108,7 +108,6 @@ fun LoginScreen(
 
                     BasicTextButton(AppText.forgot_password, Modifier
                         .fillMaxWidth()
-                        //.padding(16.dp, 8.dp, 16.dp, 0.dp)
                     ){
                         viewModel.sendRecoveryEmail()
 

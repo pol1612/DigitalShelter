@@ -20,6 +20,7 @@ import com.pol.sane.jove.digitalshelter.R
 import com.pol.sane.jove.digitalshelter.ui.common.composables.screens.UserSettingsScreen
 import com.pol.sane.jove.digitalshelter.ui.common.extensions.AddBottBarNavItem
 import com.pol.sane.jove.digitalshelter.ui.graphs.shelterMainDogsNavGraph
+import com.pol.sane.jove.digitalshelter.ui.screens.main.shelter.composables.user_settings.ShelterUserSettingsScreen
 
 @Composable
 fun ShelterMainScreen(
@@ -36,15 +37,26 @@ fun ShelterMainScreen(
                 containerColor = MaterialTheme.colorScheme.tertiary
             ){
                 AddBottBarNavItem(
-                    selected = (uiState.selectedIcon == 0),
-                    onClick = { viewModel.onDogPawIconClick(navController)
-                              },
+                    selected = (uiState.selectedIcon == ShelterMainScreenComposables.Dogs.iconNumber),
+                    onClick = {
+                        //viewModel.onDogPawIconClick(navController)
+                        viewModel.onIconClick(
+                            navController,
+                            ShelterMainScreenComposables.Dogs.route,
+                            ShelterMainScreenComposables.Dogs.iconNumber
+                        )
+                    },
                     iconDescription = ShelterMainScreenComposables.Dogs.iconDescription,
                     iconImage = ShelterMainScreenComposables.Dogs.iconImage
                 )
                 AddBottBarNavItem(
                     selected = (uiState.selectedIcon == 1),
-                    onClick = { viewModel.onUserIconClick(navController)
+                    onClick = { //viewModel.onUserIconClick(navController)
+                        viewModel.onIconClick(
+                            navController,
+                            ShelterMainScreenComposables.User.route,
+                            ShelterMainScreenComposables.User.iconNumber
+                        )
                     },
                     iconDescription = ShelterMainScreenComposables.User.iconDescription,
                     iconImage = ShelterMainScreenComposables.User.iconImage
@@ -63,7 +75,7 @@ fun ShelterMainScreen(
                 shelterMainDogsNavGraph(ShelterMainScreenComposables.Dogs.route)
 
                 composable(ShelterMainScreenComposables.User.route){
-                    //UserSettingsScreen()
+                    ShelterUserSettingsScreen()
                 }
             }
         }
@@ -79,18 +91,21 @@ fun ShelterMainScreenPreview(){
 sealed class ShelterMainScreenComposables(
     var route: String,
     var iconDescription: Int,
-    var iconImage: Int
+    var iconImage: Int,
+    var iconNumber: Int
 )
 {
     object Dogs: ShelterMainScreenComposables(
         route = "dogs",
         iconDescription = R.string.dog_paw_icon_content_description,
-        iconImage = R.drawable.paw_icon
+        iconImage = R.drawable.paw_icon,
+        iconNumber = 0
     )
     object User: ShelterMainScreenComposables(
         route = "user",
         iconDescription = R.string.user_icon_content_description,
-        iconImage = R.drawable.user_icon
+        iconImage = R.drawable.user_icon,
+        iconNumber = 1
     )
 
 }
