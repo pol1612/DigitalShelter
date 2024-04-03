@@ -1,6 +1,5 @@
 package com.pol.sane.jove.digitalshelter.ui.screens.main.shelter
 
-import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -17,7 +16,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.pol.sane.jove.digitalshelter.R
-import com.pol.sane.jove.digitalshelter.ui.common.composables.screens.UserSettingsScreen
 import com.pol.sane.jove.digitalshelter.ui.common.extensions.AddBottBarNavItem
 import com.pol.sane.jove.digitalshelter.ui.graphs.shelterMainDogsNavGraph
 import com.pol.sane.jove.digitalshelter.ui.screens.main.shelter.composables.user_settings.ShelterUserSettingsScreen
@@ -75,7 +73,7 @@ fun ShelterMainScreen(
                 shelterMainDogsNavGraph(ShelterMainScreenComposables.Dogs.route)
 
                 composable(ShelterMainScreenComposables.User.route){
-                    ShelterUserSettingsScreen()
+                    ShelterUserSettingsScreen(rootNavController)
                 }
             }
         }

@@ -2,14 +2,14 @@ package com.pol.sane.jove.digitalshelter.ui.common.composables.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
@@ -29,7 +29,8 @@ fun UserSettingsScreen(
     userName: String,
     passwordRecoveryEmailSender: () -> Unit,
     logOut: () -> Unit,
-    deleteAccount: () -> Unit
+    deleteAccount: () -> Unit,
+    snackbarHostState: SnackbarHostState
 ){
     Scaffold(
         topBar = {
@@ -39,7 +40,8 @@ fun UserSettingsScreen(
                     containerColor = MaterialTheme.colorScheme.primaryContainer),
 
                 )
-        }
+        },
+        snackbarHost = { SnackbarHost(snackbarHostState) }
     ) { paddingValues ->
         Column(
             modifier = Modifier
@@ -51,28 +53,28 @@ fun UserSettingsScreen(
             Spacer(modifier = Modifier
                 .padding(horizontal = 0.dp, vertical = 10.dp))
             Text(
-                text = "User: ${userName}",
+                text = stringResource(R.string.hi, userName),
                 modifier = Modifier.padding(
                     horizontal = 0.dp,
                     vertical = 10.dp
                 ),
-                fontSize = 16.sp
+                fontSize = 20.sp
             )
             BasicButton(
                 text = R.string.send_password_revovery_email,
                 modifier = Modifier
                     .padding(10.dp),
-                action = { passwordRecoveryEmailSender }
+                action = { passwordRecoveryEmailSender() }
             )
             BasicButton(
                 text = R.string.log_out,
                 modifier = Modifier.padding(10.dp),
-                action = { logOut }
+                action = { logOut() }
             )
             BasicButton(
                 text = R.string.delete_account_permanently,
                 modifier = Modifier.padding(10.dp),
-                action = { deleteAccount }
+                action = { deleteAccount() }
             )
         }
 
@@ -86,6 +88,7 @@ fun UserSettingsScreenPreview(){
         userName = "Pol shelter",
         passwordRecoveryEmailSender = {},
         logOut = {},
-        deleteAccount = {}
+        deleteAccount = {},
+        snackbarHostState = SnackbarHostState()
     )
 }
