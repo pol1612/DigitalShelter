@@ -1,13 +1,13 @@
 
 
-package com.pol.sane.jove.digitalshelter.model.service.module
+package com.pol.sane.jove.digitalshelter.data.module
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.pol.sane.jove.digitalshelter.model.service.implementations.UserDetailsService
-import com.pol.sane.jove.digitalshelter.model.service.implementations.UserService
-import com.pol.sane.jove.digitalshelter.model.service.interfaces.UserDetailsServiceInterface
-import com.pol.sane.jove.digitalshelter.model.service.interfaces.UserServiceInterface
+import com.pol.sane.jove.digitalshelter.data.implementations.UserDetailsService
+import com.pol.sane.jove.digitalshelter.data.implementations.UserService
+import com.pol.sane.jove.digitalshelter.data.interfaces.UserDetailsServiceInterface
+import com.pol.sane.jove.digitalshelter.data.interfaces.UserServiceInterface
 import org.koin.dsl.module
 
 val appModule = module {

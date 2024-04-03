@@ -4,7 +4,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.pol.sane.jove.digitalshelter.RootGraph
+import com.pol.sane.jove.digitalshelter.ui.RootGraph
 import com.pol.sane.jove.digitalshelter.ui.screens.auth.login.LoginScreen
 import com.pol.sane.jove.digitalshelter.ui.screens.auth.signup.SignUpScreen
 

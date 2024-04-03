@@ -1,4 +1,4 @@
-package com.pol.sane.jove.digitalshelter.model.service
+package com.pol.sane.jove.digitalshelter.data.pojo
 
 data class User(
     val id: String? = "",

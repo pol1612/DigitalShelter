@@ -1,12 +1,11 @@
-package com.pol.sane.jove.digitalshelter.model.service.implementations
+package com.pol.sane.jove.digitalshelter.data.implementations
 
 import android.util.Log
-import android.widget.ExpandableListView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
-import com.pol.sane.jove.digitalshelter.model.service.UserDetails
-import com.pol.sane.jove.digitalshelter.model.service.interfaces.UserDetailsServiceInterface
+import com.pol.sane.jove.digitalshelter.data.pojo.UserDetails
+import com.pol.sane.jove.digitalshelter.data.interfaces.UserDetailsServiceInterface
 import kotlinx.coroutines.tasks.await
 
 class UserDetailsService(

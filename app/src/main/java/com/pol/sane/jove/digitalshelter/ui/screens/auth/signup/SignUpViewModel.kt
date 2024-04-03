@@ -10,8 +10,7 @@ import androidx.navigation.NavHostController
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.MultiplePermissionsState
 import com.google.android.gms.tasks.CancellationTokenSource
-import com.pol.sane.jove.digitalshelter.model.service.implementations.UserDetailsService
-import com.pol.sane.jove.digitalshelter.model.service.interfaces.UserServiceInterface
+import com.pol.sane.jove.digitalshelter.data.interfaces.UserServiceInterface
 import com.pol.sane.jove.digitalshelter.ui.graphs.AuthScreen
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -21,8 +20,8 @@ import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.firestore.GeoPoint
 import com.google.maps.android.compose.CameraPositionState
-import com.pol.sane.jove.digitalshelter.model.service.UserDetails
-import com.pol.sane.jove.digitalshelter.model.service.interfaces.UserDetailsServiceInterface
+import com.pol.sane.jove.digitalshelter.data.pojo.UserDetails
+import com.pol.sane.jove.digitalshelter.data.interfaces.UserDetailsServiceInterface
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch

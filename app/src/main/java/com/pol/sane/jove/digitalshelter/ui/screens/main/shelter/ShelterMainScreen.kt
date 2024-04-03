@@ -18,7 +18,7 @@ import androidx.navigation.compose.rememberNavController
 import com.pol.sane.jove.digitalshelter.R
 import com.pol.sane.jove.digitalshelter.ui.common.extensions.AddBottBarNavItem
 import com.pol.sane.jove.digitalshelter.ui.graphs.shelterMainDogsNavGraph
-import com.pol.sane.jove.digitalshelter.ui.screens.main.shelter.composables.user_settings.ShelterUserSettingsScreen
+import com.pol.sane.jove.digitalshelter.ui.screens.main.shelter.shelter_screens.user_settings.ShelterUserSettingsScreen
 
 @Composable
 fun ShelterMainScreen(

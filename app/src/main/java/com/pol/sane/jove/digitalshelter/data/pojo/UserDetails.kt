@@ -1,5 +1,5 @@
 
-package com.pol.sane.jove.digitalshelter.model.service
+package com.pol.sane.jove.digitalshelter.data.pojo
 
 import com.google.firebase.firestore.GeoPoint
 import com.google.firebase.firestore.PropertyName

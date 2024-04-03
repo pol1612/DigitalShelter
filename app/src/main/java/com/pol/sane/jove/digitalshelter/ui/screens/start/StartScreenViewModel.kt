@@ -2,8 +2,8 @@ package com.pol.sane.jove.digitalshelter.ui.screens.start
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import com.pol.sane.jove.digitalshelter.RootGraph
-import com.pol.sane.jove.digitalshelter.model.service.interfaces.UserDetailsServiceInterface
+import com.pol.sane.jove.digitalshelter.data.interfaces.UserDetailsServiceInterface
+import com.pol.sane.jove.digitalshelter.ui.RootGraph
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

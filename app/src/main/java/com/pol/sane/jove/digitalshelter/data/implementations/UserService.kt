@@ -1,12 +1,12 @@
-package com.pol.sane.jove.digitalshelter.model.service.implementations
+package com.pol.sane.jove.digitalshelter.data.implementations
 
 import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException
-import com.pol.sane.jove.digitalshelter.model.service.User
-import com.pol.sane.jove.digitalshelter.model.service.interfaces.UserServiceInterface
+import com.pol.sane.jove.digitalshelter.data.pojo.User
+import com.pol.sane.jove.digitalshelter.data.interfaces.UserServiceInterface
 import kotlinx.coroutines.tasks.await
 
 class UserService(private val auth: FirebaseAuth): UserServiceInterface {

@@ -4,9 +4,9 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
-import com.pol.sane.jove.digitalshelter.RootGraph
-import com.pol.sane.jove.digitalshelter.model.service.interfaces.UserDetailsServiceInterface
-import com.pol.sane.jove.digitalshelter.model.service.interfaces.UserServiceInterface
+import com.pol.sane.jove.digitalshelter.data.interfaces.UserDetailsServiceInterface
+import com.pol.sane.jove.digitalshelter.data.interfaces.UserServiceInterface
+import com.pol.sane.jove.digitalshelter.ui.RootGraph
 import com.pol.sane.jove.digitalshelter.ui.graphs.AuthScreen
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

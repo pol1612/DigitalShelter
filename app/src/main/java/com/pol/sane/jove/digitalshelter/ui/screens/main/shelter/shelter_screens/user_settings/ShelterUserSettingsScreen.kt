@@ -1,4 +1,4 @@
-package com.pol.sane.jove.digitalshelter.ui.screens.main.shelter.composables.user_settings
+package com.pol.sane.jove.digitalshelter.ui.screens.main.shelter.shelter_screens.user_settings
 
 import android.util.Log
 import androidx.compose.material3.SnackbarDuration

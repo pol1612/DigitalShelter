@@ -1,12 +1,12 @@
-package com.pol.sane.jove.digitalshelter.ui.screens.main.shelter.composables.user_settings
+package com.pol.sane.jove.digitalshelter.ui.screens.main.shelter.shelter_screens.user_settings
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
-import com.pol.sane.jove.digitalshelter.RootGraph
-import com.pol.sane.jove.digitalshelter.model.service.interfaces.UserDetailsServiceInterface
-import com.pol.sane.jove.digitalshelter.model.service.interfaces.UserServiceInterface
+import com.pol.sane.jove.digitalshelter.data.interfaces.UserDetailsServiceInterface
+import com.pol.sane.jove.digitalshelter.data.interfaces.UserServiceInterface
+import com.pol.sane.jove.digitalshelter.ui.RootGraph
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -79,5 +79,16 @@ class ShelterUserSettingsScreenViewModel: ViewModel(), KoinComponent {
             rootNavController.popBackStack()
             rootNavController.navigate(RootGraph.AUTHENTICATION)
         }
+    }
+
+    fun deleteAccountAndItsDogs(){
+        //TODO: Delete all the images of the dogs
+        //TODO: Delete all the saved instances of each dog
+        //TODO: Delete all the dogs of the user
+        //TODO: Delete the userDetails of the user
+        //TODO: Delete the auth user
+        //TODO: Log out the app
+        //TODO: go to Login screen
+
     }
 }

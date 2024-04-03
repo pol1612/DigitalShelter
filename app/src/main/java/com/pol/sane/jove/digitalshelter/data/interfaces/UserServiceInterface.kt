@@ -1,7 +1,7 @@
 
-package com.pol.sane.jove.digitalshelter.model.service.interfaces
+package com.pol.sane.jove.digitalshelter.data.interfaces
 
-import com.pol.sane.jove.digitalshelter.model.service.User
+import com.pol.sane.jove.digitalshelter.data.pojo.User
 
 interface UserServiceInterface {
         suspend fun createUser(email: String, password: String, setSnackbarText: (String) -> Unit )
