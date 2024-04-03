@@ -1,11 +1,10 @@
 package com.pol.sane.jove.digitalshelter.ui.screens.main.shelter.composables.user_settings
 
-import android.content.Context
 import android.util.Log
-import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.pol.sane.jove.digitalshelter.R
+import androidx.navigation.NavHostController
+import com.pol.sane.jove.digitalshelter.RootGraph
 import com.pol.sane.jove.digitalshelter.model.service.interfaces.UserDetailsServiceInterface
 import com.pol.sane.jove.digitalshelter.model.service.interfaces.UserServiceInterface
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -72,5 +71,13 @@ class ShelterUserSettingsScreenViewModel: ViewModel(), KoinComponent {
             )
         }
 
+    }
+
+    fun logOut(rootNavController: NavHostController) {
+        viewModelScope.launch {
+            userService.signOut()
+            rootNavController.popBackStack()
+            rootNavController.navigate(RootGraph.AUTHENTICATION)
+        }
     }
 }

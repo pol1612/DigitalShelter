@@ -116,7 +116,7 @@ class LoginViewModel: ViewModel(), KoinComponent {
 
     }
 
-    fun sendRecoveryEmail() {
+    fun sendRecoveryEmail(emailSentText: String) {
         viewModelScope.launch {
             _uiState.update { it -> it.copy(snackBarText = "") }
             if(EmailValidator.getInstance().isValid(_uiState.value.email)){
@@ -132,6 +132,13 @@ class LoginViewModel: ViewModel(), KoinComponent {
                 _uiState.update { currentState ->
                     currentState.copy(
                         snackBarText = "The email is wrongly formatted."
+                    )
+                }
+            }
+            if(_uiState.value.snackBarText.isNullOrEmpty()){
+                _uiState.update { it ->
+                    it.copy(
+                        snackBarText = emailSentText
                     )
                 }
             }

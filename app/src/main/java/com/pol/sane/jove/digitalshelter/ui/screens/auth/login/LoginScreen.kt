@@ -39,6 +39,7 @@ import com.pol.sane.jove.digitalshelter.ui.common.composables.simples.BasicButto
 import com.pol.sane.jove.digitalshelter.ui.common.composables.simples.EmailField
 import com.pol.sane.jove.digitalshelter.ui.common.composables.simples.PasswordField
 import android.util.Log
+import com.pol.sane.jove.digitalshelter.R
 import com.pol.sane.jove.digitalshelter.R.string as AppText
 
 
@@ -98,18 +99,18 @@ fun LoginScreen(
                         text = AppText.sign_in,
                         modifier = Modifier
                             .width(320.dp)
-                            .padding( horizontal =  0.dp, vertical =  8.dp),
+                            .padding(horizontal = 0.dp, vertical = 8.dp),
                         action = {
                             viewModel.onLoginClick(navHostController)
                         },
                         enabled = uiState.isSignInButtonEnabled
 
                     )
-
+                    var emailSentText = stringResource(id = R.string.the_email_was_successfully_sent)
                     BasicTextButton(AppText.forgot_password, Modifier
                         .fillMaxWidth()
                     ){
-                        viewModel.sendRecoveryEmail()
+                        viewModel.sendRecoveryEmail(emailSentText)
 
 
                     }
