@@ -21,6 +21,7 @@ fun ShelterUserSettingsScreen(rootNavController: NavHostController) {
     var uiState: ShelterUserSettingsScreenUiState = viewModel.uiState.collectAsState().value
     val snackbarHostState = remember { SnackbarHostState() }
     var emailSentText = stringResource(id = R.string.the_email_was_successfully_sent)
+
     UserSettingsScreen(
         userName = uiState.userDetails.userName!!,
         passwordRecoveryEmailSender = { viewModel.sendRecoveryEmail(emailSentText) },

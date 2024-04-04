@@ -70,7 +70,7 @@ fun ShelterMainScreen(
                 navController = navController,
                 startDestination = ShelterMainScreenComposables.Dogs.route,
             ){
-                shelterMainDogsNavGraph(ShelterMainScreenComposables.Dogs.route)
+                shelterMainDogsNavGraph(navController)
 
                 composable(ShelterMainScreenComposables.User.route){
                     ShelterUserSettingsScreen(rootNavController)

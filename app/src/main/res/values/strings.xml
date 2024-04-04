@@ -21,5 +21,8 @@
     <string name="send_password_revovery_email">Send password revovery email</string>
     <string name="hi">Hi, %1$s!</string>
     <string name="the_email_was_successfully_sent">The email was successfully sent</string>
+    <string name="shelter_dog_list_title">Shelter\'s dogs list</string>
+    <string name="dog_paw_image">Dog paw image</string>
+    <string name="empty_shelter_dogs_list_text">Oh! It looks like you haven\'t added any dogs to your digital shelter.</string>
 
 </resources>
