@@ -1,19 +1,28 @@
-package com.pol.sane.jove.digitalshelter.ui.screens.main.shelter.shelter_screens.dog_list
+package com.pol.sane.jove.digitalshelter.ui.screens.main.shelter.shelter_screens.dogs_screens.dog_list
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.key
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -24,12 +33,19 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.pol.sane.jove.digitalshelter.R
+import com.pol.sane.jove.digitalshelter.data.pojo.Dog
+import com.pol.sane.jove.digitalshelter.ui.screens.main.shelter.shelter_screens.dogs_screens.ShelterDogsScreensUiState
+import com.pol.sane.jove.digitalshelter.ui.screens.main.shelter.shelter_screens.dogs_screens.ShelterDogsScreensViewModel
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.Period
+import java.time.ZoneId
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ShelterDogsListScreen(navHostController: NavHostController) {
-    var viewModel: ShelterDogsListScreenViewModel = viewModel()
-    var uiState: ShelterDogsListScreenUiState = viewModel.uiState.collectAsState().value
+    var sharedViewModel: ShelterDogsScreensViewModel = viewModel()
+    var uiState: ShelterDogsScreensUiState = sharedViewModel.uiState.collectAsState().value
     Scaffold(
         topBar = {
             TopAppBar(
@@ -38,7 +54,15 @@ fun ShelterDogsListScreen(navHostController: NavHostController) {
                     containerColor = MaterialTheme.colorScheme.primaryContainer)
             )
         },
-        snackbarHost = {}
+        snackbarHost = {},
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = { sharedViewModel.createDogButtonOnClick(navHostController) },
+                shape = CircleShape
+            ){
+                Icon(Icons.Default.Add, contentDescription = stringResource(R.string.dog_creation_floating_button))
+            }
+        }
     ) { paddingValues ->
         Column(
             modifier = Modifier
@@ -47,8 +71,11 @@ fun ShelterDogsListScreen(navHostController: NavHostController) {
             if(uiState.dogsList.size == 0){
                 EmptyDogsList()
             }else{
-                DogsList()
+                DogsList(uiState.dogsList)
             }
+        }
+        LaunchedEffect(key1 = uiState.dogsList){
+
         }
     }
 }
@@ -73,12 +100,36 @@ fun EmptyDogsList(){
             modifier = Modifier
                 .width(300.dp),
             textAlign = TextAlign.Center
-
         )
     }
 }
 
-@Composable
-fun DogsList(){
+@OptIn(ExperimentalMaterial3Api::class)
 
+@Composable
+fun DogsList(dogsHashMap: HashMap<String, Dog>) {
+    Column {
+        dogsHashMap.forEach(){
+            key(it.key) { //Dog ID
+                DogItem(dog = it.value)
+            }
+        }
+    }
+}
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun DogItem(dog: Dog){
+    Card(
+        onClick = {
+
+        },
+        modifier = Modifier
+    ) {
+        Row {
+            Text(text = dog.dogName)
+            var birthDate: LocalDate = dog.dogDateOfBirth.toDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
+            var dogAge: Int = Period.between(birthDate, LocalDateTime.now().toLocalDate()).years
+            Text(text = dogAge.toString())
+        }
+    }
 }

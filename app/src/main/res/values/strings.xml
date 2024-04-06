@@ -24,5 +24,6 @@
     <string name="shelter_dog_list_title">Shelter\'s dogs list</string>
     <string name="dog_paw_image">Dog paw image</string>
     <string name="empty_shelter_dogs_list_text">Oh! It looks like you haven\'t added any dogs to your digital shelter.</string>
+    <string name="dog_creation_floating_button">Dog creation floating button</string>
 
 </resources>

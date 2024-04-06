@@ -5,7 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.pol.sane.jove.digitalshelter.ui.screens.main.shelter.ShelterMainScreenComposables
-import com.pol.sane.jove.digitalshelter.ui.screens.main.shelter.shelter_screens.dog_list.ShelterDogsListScreen
+import com.pol.sane.jove.digitalshelter.ui.screens.main.shelter.shelter_screens.dogs_screens.dog_list.ShelterDogsListScreen
 
 fun NavGraphBuilder.shelterMainDogsNavGraph(navHostController: NavHostController) {
     navigation(

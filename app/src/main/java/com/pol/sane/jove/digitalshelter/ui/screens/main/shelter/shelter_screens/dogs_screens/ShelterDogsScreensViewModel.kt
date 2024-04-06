@@ -1,21 +1,26 @@
-package com.pol.sane.jove.digitalshelter.ui.screens.main.shelter.shelter_screens.dog_list
+package com.pol.sane.jove.digitalshelter.ui.screens.main.shelter.shelter_screens.dogs_screens
 
 import androidx.lifecycle.ViewModel
+import androidx.navigation.NavHostController
 import com.pol.sane.jove.digitalshelter.data.interfaces.UserDetailsServiceInterface
 import com.pol.sane.jove.digitalshelter.data.interfaces.UserServiceInterface
-import com.pol.sane.jove.digitalshelter.ui.screens.main.shelter.shelter_screens.user_settings.ShelterUserSettingsScreenUiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class ShelterDogsListScreenViewModel: ViewModel(),KoinComponent {
+class ShelterDogsScreensViewModel: ViewModel(),KoinComponent {
+
+
 
     private val userService: UserServiceInterface by inject()
     private val userDetailsService: UserDetailsServiceInterface by inject()
 
-    private val _uiState = MutableStateFlow(ShelterDogsListScreenUiState())
-    val uiState: StateFlow<ShelterDogsListScreenUiState> = _uiState.asStateFlow()
+    private val _uiState = MutableStateFlow(ShelterDogsScreensUiState())
+    val uiState: StateFlow<ShelterDogsScreensUiState> = _uiState.asStateFlow()
 
+    fun createDogButtonOnClick(navHostController: NavHostController) {
+        TODO("Not yet implemented")
+    }
 }

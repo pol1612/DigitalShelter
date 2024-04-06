@@ -17,6 +17,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.pol.sane.jove.digitalshelter.R
 import com.pol.sane.jove.digitalshelter.ui.common.extensions.AddBottBarNavItem
+import com.pol.sane.jove.digitalshelter.ui.graphs.ShelterMainDogsScreenComposables
 import com.pol.sane.jove.digitalshelter.ui.graphs.shelterMainDogsNavGraph
 import com.pol.sane.jove.digitalshelter.ui.screens.main.shelter.shelter_screens.user_settings.ShelterUserSettingsScreen
 
@@ -34,6 +35,26 @@ fun ShelterMainScreen(
                 //contentColor = MaterialTheme.colorScheme.primaryContainer,
                 containerColor = MaterialTheme.colorScheme.tertiary
             ){
+                var bottBarIcons: Array<ShelterMainScreenComposables> = arrayOf(
+                    ShelterMainScreenComposables.Dogs,
+                    ShelterMainScreenComposables.User,
+                )
+                bottBarIcons.forEach { it ->
+                    AddBottBarNavItem(
+                        selected = (uiState.selectedIcon == it.iconNumber),
+                        onClick = {
+                            //viewModel.onDogPawIconClick(navController)
+                            viewModel.onIconClick(
+                                navController,
+                                it.route,
+                                it.iconNumber
+                            )
+                        },
+                        iconDescription = it.iconDescription,
+                        iconImage = it.iconImage
+                    )
+                }
+                /*
                 AddBottBarNavItem(
                     selected = (uiState.selectedIcon == ShelterMainScreenComposables.Dogs.iconNumber),
                     onClick = {
@@ -48,7 +69,7 @@ fun ShelterMainScreen(
                     iconImage = ShelterMainScreenComposables.Dogs.iconImage
                 )
                 AddBottBarNavItem(
-                    selected = (uiState.selectedIcon == 1),
+                    selected = (uiState.selectedIcon == ShelterMainScreenComposables.User.iconNumber),
                     onClick = { //viewModel.onUserIconClick(navController)
                         viewModel.onIconClick(
                             navController,
@@ -59,6 +80,7 @@ fun ShelterMainScreen(
                     iconDescription = ShelterMainScreenComposables.User.iconDescription,
                     iconImage = ShelterMainScreenComposables.User.iconImage
                 )
+                */
 
             }
         }
