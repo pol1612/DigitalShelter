@@ -30,5 +30,13 @@
     <string name="tick_icon_it_saves_the_dog_into_the_app_and_goes_back_to_the_previous_screen_it">"Tick icon. It saves the dog into the app and goes back to the previous screen. It "</string>
     <string name="the_image_that_has_been_picked_from_the_gallery_to_represent_the_new_dog">The image that has been picked from the gallery to represent the new dog</string>
     <string name="dog_name">Dog name</string>
+    <string name="dog_description">Dog description</string>
+    <string name="dog_birth_date">Dog birth date: %1$s</string>
+    <string name="choose_the_dog_s_birth_date">Choose the dog\'s birth date</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">Ok</string>
+    <string name="calendar">Calendar</string>
+    <string name="lock">Lock</string>
+    <string name="visibility">Visibility</string>
 
 </resources>

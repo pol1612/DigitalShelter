@@ -3,13 +3,10 @@ package com.pol.sane.jove.digitalshelter.ui.screens.main.shelter.shelter_screens
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.gestures.ScrollableState
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Done
@@ -72,20 +69,23 @@ fun ShelterDogCreationScreen(
                     viewModel.updateLocalUri(it)
                 }
             )
-            LazyColumn(){
-                item {
+            Column(){
 
-                    ShelterDogDetails(
-                        imagePickerOnClick = {
-                            singlePhotoPicker.launch(
-                                PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
-                            )
-                        },
-                        localUri = uiState.localUri,
-                        dogName = uiState.dogName,
-                        onDogNameChange = { viewModel.onDogNameChange(it) }
-                    )
-                }
+                ShelterDogDetails(
+                    onImagePickerClick = {
+                        singlePhotoPicker.launch(
+                            PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                        )
+                    },
+                    localUri = uiState.localUri,
+                    dogName = uiState.dogName,
+                    onDogNameChange = { viewModel.onDogNameChange(it) },
+                    dogDescription = uiState.dogDescription,
+                    onDogDescriptionChange = {viewModel.onDogDescriptionChange(it)},
+                    dogBirthDate = uiState.dogBirthDate,
+                    updateDogBirthDate = { viewModel.updateDogBirthDate(it) }
+                )
+
             }
         }
     }

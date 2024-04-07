@@ -2,9 +2,11 @@
 package com.pol.sane.jove.digitalshelter.ui.common.composables.simples
 
 import androidx.annotation.StringRes
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Person
@@ -20,25 +22,68 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+import com.pol.sane.jove.digitalshelter.R
 import com.pol.sane.jove.digitalshelter.R.drawable as AppIcon
 import com.pol.sane.jove.digitalshelter.R.string as AppText
 
 
 @Composable
 fun BasicField(
-  @StringRes text: Int,
+  placeholder: Int = 0,
   value: String,
   onNewValue: (String) -> Unit,
-  modifier: Modifier = Modifier
+  modifier: Modifier = Modifier,
+  label: String = ""
 ) {
   OutlinedTextField(
+    label = {
+      if (!label.equals("")){
+        Text(label)
+      }
+
+    },
     singleLine = true,
     modifier = modifier.width(290.dp),
     value = value,
     onValueChange = { onNewValue(it) },
-    placeholder = { Text(stringResource(text)) }
+    placeholder = {
+      if(placeholder != 0){
+        Text(stringResource(placeholder))
+      }
+    }
   )
 }
+
+@Composable
+fun BasicBigField(
+  placeholder: Int = 0,
+  value: String,
+  onNewValue: (String) -> Unit,
+  modifier: Modifier = Modifier,
+  label: String = ""
+
+) {
+  OutlinedTextField(
+    label = {
+      if (!label.equals("")){
+        Text(label)
+      }
+    },
+    singleLine = false,
+    modifier = modifier
+      .width(290.dp)
+      .height(150.dp),
+    value = value,
+    onValueChange = { onNewValue(it) },
+    placeholder = {
+      if(placeholder != 0){
+        Text(stringResource(placeholder))
+      }
+    }
+  )
+}
+
+
 
 @Composable
 fun EmailField(value: String, onNewValue: (String) -> Unit, modifier: Modifier = Modifier) {
@@ -48,7 +93,7 @@ fun EmailField(value: String, onNewValue: (String) -> Unit, modifier: Modifier =
     value = value,
     onValueChange = { onNewValue(it) },
     placeholder = { Text(stringResource(AppText.email)) },
-    leadingIcon = { Icon(imageVector = Icons.Default.Email, contentDescription = "Email") }
+    leadingIcon = { Icon(imageVector = Icons.Default.Email, contentDescription = stringResource(id = AppText.email)) }
   )
 }
 
@@ -60,7 +105,27 @@ fun UsernameField(value: String, onNewValue: (String) -> Unit, modifier: Modifie
     value = value,
     onValueChange = { onNewValue(it) },
     placeholder = { Text(stringResource(AppText.username)) },
-    leadingIcon = { Icon(imageVector = Icons.Default.Person, contentDescription = "Username") }
+    leadingIcon = { Icon(imageVector = Icons.Default.Person, contentDescription = stringResource(id = AppText.username)) }
+  )
+}
+@Composable
+fun DatePickerField(date: String, modifier: Modifier = Modifier, onCalendarIconClick: () -> Unit, calendarIconEnabled: Boolean = true) {
+  OutlinedTextField(
+    label = { Text(stringResource(id = AppText.dog_birth_date))},
+    readOnly = true,
+    singleLine = true,
+    modifier = modifier.width(290.dp),
+    value = date,
+    onValueChange = {},
+    placeholder = {},
+    trailingIcon = {
+      IconButton(
+        onClick = { onCalendarIconClick() },
+        enabled = calendarIconEnabled
+      ) {
+        Icon(imageVector = Icons.Default.DateRange, contentDescription = stringResource(R.string.calendar)) }
+      }
+
   )
 }
 
@@ -99,10 +164,10 @@ private fun PasswordField(
     value = value,
     onValueChange = { onNewValue(it) },
     placeholder = { Text(text = stringResource(placeholder)) },
-    leadingIcon = { Icon(imageVector = Icons.Default.Lock, contentDescription = "Lock") },
+    leadingIcon = { Icon(imageVector = Icons.Default.Lock, contentDescription = stringResource(R.string.lock)) },
     trailingIcon = {
       IconButton(onClick = { isVisible = !isVisible }) {
-        Icon(painter = icon, contentDescription = "Visibility")
+        Icon(painter = icon, contentDescription = stringResource(R.string.visibility))
       }
     },
     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),

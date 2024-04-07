@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
+import java.time.LocalDate
 
 class ShelterDogCreationScreenViewModel: ViewModel(),KoinComponent {
 
@@ -35,6 +36,20 @@ class ShelterDogCreationScreenViewModel: ViewModel(),KoinComponent {
         _uiState.update {
             it.copy(
                 localUri = localUri
+            )
+        }
+    }
+
+    fun onDogDescriptionChange(newValue: String) {
+        _uiState.update { it.copy(
+            dogDescription = newValue
+        ) }
+    }
+
+    fun updateDogBirthDate(dogBirthDate: LocalDate) {
+        _uiState.update {
+            it.copy(
+                dogBirthDate = dogBirthDate
             )
         }
     }
