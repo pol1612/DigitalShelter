@@ -48,7 +48,9 @@ fun ShelterDogCreationScreen(
                     Spacer(modifier = Modifier
                         .width(20.dp)
                     )
-                    IconButton(onClick = { viewModel.onSaveIconClick(navHostController) }) {
+                    IconButton(
+                        enabled = uiState.isDogAbleToBeSaved,
+                        onClick = { viewModel.onSaveIconClick(navHostController) }) {
                         Icon(Icons.Default.Done,
                             stringResource(R.string.tick_icon_it_saves_the_dog_into_the_app_and_goes_back_to_the_previous_screen_it)
                         )
@@ -83,7 +85,21 @@ fun ShelterDogCreationScreen(
                     dogDescription = uiState.dogDescription,
                     onDogDescriptionChange = {viewModel.onDogDescriptionChange(it)},
                     dogBirthDate = uiState.dogBirthDate,
-                    updateDogBirthDate = { viewModel.updateDogBirthDate(it) }
+                    updateDogBirthDate = { viewModel.updateDogBirthDate(it) },
+
+                    dogStatusMenuIsExpanded = uiState.dogStatusMenuIsExpanded,
+                    onDogStatusIsExpandedChange = { viewModel.onDogStatusMenuIsExpandedChange(it) },
+                    dogStatus = uiState.dogStatus,
+                    dogStatusUpdate = { viewModel.dogStatusUpdate(it) },
+
+                    dogSizeMenuIsExpanded = uiState.dogSizeMenuIsExpanded,
+                    onDogSizeMenuIsExpandedChange = { viewModel.onDogSizeMenuIsExpandedChange(it) },
+                    dogSize = uiState.dogSize,
+                    dogSizeUpdate = { viewModel.dogSizeUpdate(it) },
+                    isDogMale = uiState.isDogMale,
+                    onMaleRadioButtonClick = { viewModel.onMaleRadioButtonClick() },
+                    onFemaleRadioButtonClick = { viewModel.onFemaleRadioButtonClick() }
+
                 )
 
             }

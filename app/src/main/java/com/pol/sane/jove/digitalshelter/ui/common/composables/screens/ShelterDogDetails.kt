@@ -2,11 +2,15 @@ package com.pol.sane.jove.digitalshelter.ui.common.composables.screens
 
 import android.net.Uri
 import android.util.Log
+import android.widget.TextSwitcher
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Add
@@ -16,7 +20,8 @@ import   com.vanpra.composematerialdialogs.datetime.date.DatePickerDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.contentColorFor
+import androidx.compose.material3.RadioButton
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import com.vanpra.composematerialdialogs.MaterialDialog
@@ -30,10 +35,8 @@ import com.pol.sane.jove.digitalshelter.R
 import com.pol.sane.jove.digitalshelter.data.pojo.Dog
 import com.pol.sane.jove.digitalshelter.ui.common.composables.simples.BasicBigField
 import com.pol.sane.jove.digitalshelter.ui.common.composables.simples.BasicField
-import com.pol.sane.jove.digitalshelter.ui.common.composables.simples.DatePickerField
-import com.vanpra.composematerialdialogs.MaterialDialogState
-import com.vanpra.composematerialdialogs.TextFieldStyle
-import com.vanpra.composematerialdialogs.datetime.date.DatePickerColors
+import com.pol.sane.jove.digitalshelter.ui.common.composables.simples.DatePicker
+import com.pol.sane.jove.digitalshelter.ui.common.composables.simples.DropDownMenu
 import com.vanpra.composematerialdialogs.datetime.date.datepicker
 import com.vanpra.composematerialdialogs.rememberMaterialDialogState
 import java.time.LocalDate
@@ -50,8 +53,22 @@ fun ShelterDogDetails(
     dogDescription: String,
     onDogDescriptionChange: (String) -> Unit,
     updateDogBirthDate: (LocalDate) -> Unit,
-    dogBirthDate: LocalDate
-){
+    dogBirthDate: LocalDate,
+    dogStatusMenuIsExpanded: Boolean,
+    onDogStatusIsExpandedChange: (Boolean) -> Unit,
+    dogStatus: String,
+    dogStatusUpdate: (String) -> Unit,
+
+    dogSizeMenuIsExpanded: Boolean,
+    onDogSizeMenuIsExpandedChange: (Boolean) -> Unit,
+    dogSize: String,
+    dogSizeUpdate: (String) -> Unit,
+    isDogMale: Boolean,
+
+    onMaleRadioButtonClick: () -> Unit,
+    onFemaleRadioButtonClick: () -> Unit,
+
+    ){
 
     Column(
     ) {
@@ -63,14 +80,25 @@ fun ShelterDogDetails(
             if (dog == null){
                 //creating a dog
                 DogDetailsCreation(
-                    onImagePickerClick,
-                    localUri,
-                    dogName,
-                    onDogNameChange,
-                    dogDescription,
-                    onDogDescriptionChange,
-                    updateDogBirthDate,
-                    dogBirthDate
+                    onImagePickerClick = onImagePickerClick,
+                    localUri = localUri,
+                    dogName = dogName,
+                    onDogNameChange = onDogNameChange,
+                    dogDescription = dogDescription,
+                    onDogDescriptionChange = onDogDescriptionChange,
+                    updateDogBirthDate = updateDogBirthDate,
+                    dogBirthDate = dogBirthDate,
+                    dogStatusMenuIsExpanded = dogStatusMenuIsExpanded,
+                    onDogStatusMenuIsExpandedChange = onDogStatusIsExpandedChange,
+                    dogStatus = dogStatus,
+                    dogStatusUpdate = dogStatusUpdate,
+                    dogSizeMenuIsExpanded = dogSizeMenuIsExpanded,
+                    onDogSizeMenuIsExpandedChange= onDogSizeMenuIsExpandedChange,
+                    dogSize = dogSize,
+                    dogSizeUpdate = dogSizeUpdate,
+                    isDogMale = isDogMale,
+                    onMaleRadioButtonClick = onMaleRadioButtonClick,
+                    onFemaleRadioButtonClick = onFemaleRadioButtonClick
                 )
             }else{
                 //updating a dog
@@ -92,9 +120,23 @@ fun DogDetailsCreation(
     dogDescription: String,
     onDogDescriptionChange: (String) -> Unit,
     updateDogBirthDate: (LocalDate) -> Unit,
-    dogBirthDate: LocalDate
+    dogBirthDate: LocalDate,
 
-){
+    dogStatusMenuIsExpanded: Boolean,
+    onDogStatusMenuIsExpandedChange: (Boolean) -> Unit,
+    dogStatus: String,
+    dogStatusUpdate: (String) -> Unit,
+
+    dogSizeMenuIsExpanded: Boolean,
+    onDogSizeMenuIsExpandedChange: (Boolean) -> Unit,
+    dogSize: String,
+    dogSizeUpdate: (String) -> Unit,
+    isDogMale: Boolean ,
+    onMaleRadioButtonClick: () -> Unit,
+    onFemaleRadioButtonClick: () -> Unit,
+
+
+    ){
     val dateDialogState = rememberMaterialDialogState()
     LazyColumn(
         modifier = Modifier
@@ -151,12 +193,87 @@ fun DogDetailsCreation(
         }
         item {
             var date = dogBirthDate.format(DateTimeFormatter.ofPattern("dd MMM yyyy"))
-            DatePickerField(
+            DatePicker(
                 date = date,
                 onCalendarIconClick = {
                     dateDialogState.show()
                 }
             )
+        }
+        item {
+            var dogStatuses = hashMapOf<String,String>(
+                "Available" to stringResource(R.string.available),
+                "Reserved" to stringResource(R.string.reserved),
+                "Adopted" to stringResource(R.string.adopted)
+            )
+            var dogSizes = hashMapOf<String,String>(
+                "Small" to stringResource(R.string.small),
+                "Medium" to stringResource(R.string.medium),
+                "Big" to stringResource(R.string.big)
+            )
+
+            Row(
+                modifier = Modifier
+                    .padding(
+                        vertical = 45.dp,
+                        horizontal = 0.dp
+                    )
+
+            ) {
+
+                DropDownMenu(
+                    currentMenuValue = dogSizes[dogSize].toString(),
+                    isMenuExpanded = dogSizeMenuIsExpanded,
+                    onIsMenuExpandedChange = onDogSizeMenuIsExpandedChange,
+                    menuValueUpdate = dogSizeUpdate,
+                    menuItems = dogSizes,
+                    menuName = stringResource(R.string.dog_size),
+                    modifier = Modifier
+                        .width(140.dp)
+                )
+                Spacer(modifier = Modifier
+                    .width(10.dp)
+                )
+                DropDownMenu(
+                    currentMenuValue = dogStatus,
+                    isMenuExpanded = dogStatusMenuIsExpanded,
+                    onIsMenuExpandedChange = onDogStatusMenuIsExpandedChange,
+                    menuValueUpdate = dogStatusUpdate,
+                    menuItems = dogStatuses,
+                    menuName = stringResource(R.string.dog_status),
+                    modifier = Modifier
+                        .width(140.dp)
+                )
+
+            }
+        }
+        item {
+            Column(
+                modifier = Modifier
+                    .padding(
+                        bottom = 45.dp
+                    ),
+            ) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+
+                    RadioButton(
+                        selected = isDogMale,
+                        onClick = { onMaleRadioButtonClick() }
+                    )
+                    Text(
+                        text = stringResource(id = R.string.male)
+                    )
+                    Spacer(modifier = Modifier.width(190.dp))
+                }
+                Row(verticalAlignment = Alignment.CenterVertically) {
+
+                    RadioButton(
+                        selected = !isDogMale,
+                        onClick = { onFemaleRadioButtonClick() }
+                    )
+                    Text(text = stringResource(R.string.female_dog))
+                }
+            }
         }
     }
     MaterialDialog(

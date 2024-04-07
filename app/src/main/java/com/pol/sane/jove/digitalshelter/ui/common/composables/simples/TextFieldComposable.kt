@@ -108,26 +108,7 @@ fun UsernameField(value: String, onNewValue: (String) -> Unit, modifier: Modifie
     leadingIcon = { Icon(imageVector = Icons.Default.Person, contentDescription = stringResource(id = AppText.username)) }
   )
 }
-@Composable
-fun DatePickerField(date: String, modifier: Modifier = Modifier, onCalendarIconClick: () -> Unit, calendarIconEnabled: Boolean = true) {
-  OutlinedTextField(
-    label = { Text(stringResource(id = AppText.dog_birth_date))},
-    readOnly = true,
-    singleLine = true,
-    modifier = modifier.width(290.dp),
-    value = date,
-    onValueChange = {},
-    placeholder = {},
-    trailingIcon = {
-      IconButton(
-        onClick = { onCalendarIconClick() },
-        enabled = calendarIconEnabled
-      ) {
-        Icon(imageVector = Icons.Default.DateRange, contentDescription = stringResource(R.string.calendar)) }
-      }
 
-  )
-}
 
 @Composable
 fun PasswordField(value: String, onNewValue: (String) -> Unit, modifier: Modifier = Modifier) {
