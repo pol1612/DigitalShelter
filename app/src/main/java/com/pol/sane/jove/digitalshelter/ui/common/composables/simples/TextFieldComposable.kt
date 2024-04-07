@@ -2,6 +2,7 @@
 package com.pol.sane.jove.digitalshelter.ui.common.composables.simples
 
 import androidx.annotation.StringRes
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
@@ -18,6 +19,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.unit.dp
 import com.pol.sane.jove.digitalshelter.R.drawable as AppIcon
 import com.pol.sane.jove.digitalshelter.R.string as AppText
 
@@ -31,7 +33,7 @@ fun BasicField(
 ) {
   OutlinedTextField(
     singleLine = true,
-    modifier = modifier,
+    modifier = modifier.width(290.dp),
     value = value,
     onValueChange = { onNewValue(it) },
     placeholder = { Text(stringResource(text)) }
@@ -42,7 +44,7 @@ fun BasicField(
 fun EmailField(value: String, onNewValue: (String) -> Unit, modifier: Modifier = Modifier) {
   OutlinedTextField(
     singleLine = true,
-    modifier = modifier,
+    modifier = modifier.width(290.dp),
     value = value,
     onValueChange = { onNewValue(it) },
     placeholder = { Text(stringResource(AppText.email)) },
@@ -54,7 +56,7 @@ fun EmailField(value: String, onNewValue: (String) -> Unit, modifier: Modifier =
 fun UsernameField(value: String, onNewValue: (String) -> Unit, modifier: Modifier = Modifier) {
   OutlinedTextField(
     singleLine = true,
-    modifier = modifier,
+    modifier = modifier.width(290.dp),
     value = value,
     onValueChange = { onNewValue(it) },
     placeholder = { Text(stringResource(AppText.username)) },
@@ -64,7 +66,7 @@ fun UsernameField(value: String, onNewValue: (String) -> Unit, modifier: Modifie
 
 @Composable
 fun PasswordField(value: String, onNewValue: (String) -> Unit, modifier: Modifier = Modifier) {
-  PasswordField(value, AppText.password, onNewValue, modifier)
+  PasswordField(value, AppText.password, onNewValue, modifier.width(290.dp))
 }
 
 @Composable
@@ -73,7 +75,7 @@ fun RepeatPasswordField(
   onNewValue: (String) -> Unit,
   modifier: Modifier = Modifier
 ) {
-  PasswordField(value, AppText.repeat_password, onNewValue, modifier)
+  PasswordField(value, AppText.repeat_password, onNewValue, modifier.width(290.dp))
 }
 
 @Composable

@@ -54,7 +54,7 @@ fun ShelterDogsListScreen(navHostController: NavHostController) {
                     containerColor = MaterialTheme.colorScheme.primaryContainer)
             )
         },
-        snackbarHost = {},
+        snackbarHost = {  },
         floatingActionButton = {
             FloatingActionButton(
                 onClick = { sharedViewModel.createDogButtonOnClick(navHostController) },
@@ -103,8 +103,6 @@ fun EmptyDogsList(){
         )
     }
 }
-
-@OptIn(ExperimentalMaterial3Api::class)
 
 @Composable
 fun DogsList(dogsHashMap: HashMap<String, Dog>) {

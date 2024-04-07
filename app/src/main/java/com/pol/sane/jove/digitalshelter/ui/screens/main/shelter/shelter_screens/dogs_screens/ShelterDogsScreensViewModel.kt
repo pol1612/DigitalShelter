@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.navigation.NavHostController
 import com.pol.sane.jove.digitalshelter.data.interfaces.UserDetailsServiceInterface
 import com.pol.sane.jove.digitalshelter.data.interfaces.UserServiceInterface
+import com.pol.sane.jove.digitalshelter.ui.graphs.ShelterMainDogsScreens
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -21,6 +22,6 @@ class ShelterDogsScreensViewModel: ViewModel(),KoinComponent {
     val uiState: StateFlow<ShelterDogsScreensUiState> = _uiState.asStateFlow()
 
     fun createDogButtonOnClick(navHostController: NavHostController) {
-        TODO("Not yet implemented")
+        navHostController.navigate(ShelterMainDogsScreens.DOG_CREATION_SCREEN)
     }
 }

@@ -17,8 +17,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.pol.sane.jove.digitalshelter.R
 import com.pol.sane.jove.digitalshelter.ui.common.extensions.AddBottBarNavItem
-import com.pol.sane.jove.digitalshelter.ui.graphs.ShelterMainDogsScreenComposables
-import com.pol.sane.jove.digitalshelter.ui.graphs.shelterMainDogsNavGraph
+import com.pol.sane.jove.digitalshelter.ui.graphs.shelterMainDogsScreensNavGraph
 import com.pol.sane.jove.digitalshelter.ui.screens.main.shelter.shelter_screens.user_settings.ShelterUserSettingsScreen
 
 @Composable
@@ -39,7 +38,7 @@ fun ShelterMainScreen(
                     ShelterMainScreenComposables.Dogs,
                     ShelterMainScreenComposables.User,
                 )
-                bottBarIcons.forEach { it ->
+                bottBarIcons.forEach {
                     AddBottBarNavItem(
                         selected = (uiState.selectedIcon == it.iconNumber),
                         onClick = {
@@ -54,34 +53,6 @@ fun ShelterMainScreen(
                         iconImage = it.iconImage
                     )
                 }
-                /*
-                AddBottBarNavItem(
-                    selected = (uiState.selectedIcon == ShelterMainScreenComposables.Dogs.iconNumber),
-                    onClick = {
-                        //viewModel.onDogPawIconClick(navController)
-                        viewModel.onIconClick(
-                            navController,
-                            ShelterMainScreenComposables.Dogs.route,
-                            ShelterMainScreenComposables.Dogs.iconNumber
-                        )
-                    },
-                    iconDescription = ShelterMainScreenComposables.Dogs.iconDescription,
-                    iconImage = ShelterMainScreenComposables.Dogs.iconImage
-                )
-                AddBottBarNavItem(
-                    selected = (uiState.selectedIcon == ShelterMainScreenComposables.User.iconNumber),
-                    onClick = { //viewModel.onUserIconClick(navController)
-                        viewModel.onIconClick(
-                            navController,
-                            ShelterMainScreenComposables.User.route,
-                            ShelterMainScreenComposables.User.iconNumber
-                        )
-                    },
-                    iconDescription = ShelterMainScreenComposables.User.iconDescription,
-                    iconImage = ShelterMainScreenComposables.User.iconImage
-                )
-                */
-
             }
         }
     ) { paddingValues ->
@@ -92,11 +63,12 @@ fun ShelterMainScreen(
                 navController = navController,
                 startDestination = ShelterMainScreenComposables.Dogs.route,
             ){
-                shelterMainDogsNavGraph(navController)
+                shelterMainDogsScreensNavGraph(navController)
 
                 composable(ShelterMainScreenComposables.User.route){
                     ShelterUserSettingsScreen(rootNavController)
                 }
+
             }
         }
     }

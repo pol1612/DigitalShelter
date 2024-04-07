@@ -90,6 +90,9 @@ dependencies {
     implementation ("com.google.accompanist:accompanist-permissions:0.35.0-alpha")
     implementation("com.google.android.gms:play-services-location:21.1.0")
 
+    //coil for async image
+    implementation("io.coil-kt:coil-compose:2.3.0")
+
 
 
 

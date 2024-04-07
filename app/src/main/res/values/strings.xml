@@ -25,5 +25,10 @@
     <string name="dog_paw_image">Dog paw image</string>
     <string name="empty_shelter_dogs_list_text">Oh! It looks like you haven\'t added any dogs to your digital shelter.</string>
     <string name="dog_creation_floating_button">Dog creation floating button</string>
+    <string name="button_to_select_an_image_for_the_dog">Button to select an image for the dog</string>
+    <string name="x_icon_it_closes_the_dog_creation_screen_without_saving_the_dog">X icon. It closes the dog creation screen, without saving the dog.</string>
+    <string name="tick_icon_it_saves_the_dog_into_the_app_and_goes_back_to_the_previous_screen_it">"Tick icon. It saves the dog into the app and goes back to the previous screen. It "</string>
+    <string name="the_image_that_has_been_picked_from_the_gallery_to_represent_the_new_dog">The image that has been picked from the gallery to represent the new dog</string>
+    <string name="dog_name">Dog name</string>
 
 </resources>
