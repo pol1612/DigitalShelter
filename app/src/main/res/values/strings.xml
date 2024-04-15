@@ -1,0 +1,52 @@
+<resources>
+    <string name="app_name">DigitalShelter</string>
+
+
+    <string name="login_into_the_app">Log into the app</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="repeat_password">Repeat password</string>
+    <string name="sign_in">Sign in</string>
+    <string name="forgot_password">Forgot password? Click to get recovery email</string>
+    <string name="sign_up_icon_button">Sign Up Icon Button</string>
+    <string name="register_into_the_app">Register into the app</string>
+    <string name="signup">SignUp</string>
+    <string name="username">Username</string>
+    <string name="not_registered_click_here_to_sign_up">Not registered? Click to sign up</string>
+    <string name="dog_paw_icon_content_description">Dog paw icon; when clicked it shows the shelter\'s dog list</string>
+    <string name="user_icon_content_description">User icon; when clicked it shows the user settings</string>
+    <string name="user_settings">User settings</string>
+    <string name="log_out">Log out</string>
+    <string name="delete_account_permanently">Delete account permanently</string>
+    <string name="send_password_revovery_email">Send password revovery email</string>
+    <string name="hi">Hi, %1$s!</string>
+    <string name="the_email_was_successfully_sent">The email was successfully sent</string>
+    <string name="shelter_dog_list_title">Shelter\'s dogs list</string>
+    <string name="dog_paw_image">Dog paw image</string>
+    <string name="empty_shelter_dogs_list_text">Oh! It looks like you haven\'t added any dogs to your digital shelter.</string>
+    <string name="dog_creation_floating_button">Dog creation floating button</string>
+    <string name="button_to_select_an_image_for_the_dog">Button to select an image for the dog</string>
+    <string name="x_icon_it_closes_the_dog_creation_screen_without_saving_the_dog">X icon. It closes the dog creation screen, without saving the dog.</string>
+    <string name="tick_icon_it_saves_the_dog_into_the_app_and_goes_back_to_the_previous_screen_it">"Tick icon. It saves the dog into the app and goes back to the previous screen. It "</string>
+    <string name="the_image_that_has_been_picked_from_the_gallery_to_represent_the_new_dog">The image that has been picked from the gallery to represent the new dog</string>
+    <string name="dog_name">Dog name</string>
+    <string name="dog_description">Dog description</string>
+    <string name="dog_birth_date">Dog birth date</string>
+    <string name="choose_the_dog_s_birth_date">Choose the dog\'s birth date</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">Ok</string>
+    <string name="calendar">Calendar</string>
+    <string name="lock">Lock</string>
+    <string name="visibility">Visibility</string>
+    <string name="available">Available</string>
+    <string name="reserved">Reserved</string>
+    <string name="adopted">Adopted</string>
+    <string name="small">Small</string>
+    <string name="medium">Medium</string>
+    <string name="big">Big</string>
+    <string name="dog_status">Dog status</string>
+    <string name="dog_size">Dog size</string>
+    <string name="male">Male dog</string>
+    <string name="female_dog">Female dog</string>
+
+</resources>

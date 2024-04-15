@@ -1,0 +1,13 @@
+*.iml
+/.idea/
+/.idea/workspace.xml
+.gradle
+/local.properties
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+/app/google-services.json
+/app/src/main/res/values/api_keys.xml
