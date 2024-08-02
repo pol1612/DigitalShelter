@@ -1,4 +1,4 @@
-package com.pol.sane.jove.digitalshelter.data.pojo
+package com.pol.sane.jove.digitalshelter.data.database_entities
 
 import com.google.firebase.Timestamp
 import java.util.Date

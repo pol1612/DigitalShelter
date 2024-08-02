@@ -4,7 +4,7 @@ import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
-import com.pol.sane.jove.digitalshelter.data.pojo.UserDetails
+import com.pol.sane.jove.digitalshelter.data.database_entities.UserDetails
 import com.pol.sane.jove.digitalshelter.data.interfaces.UserDetailsServiceInterface
 import kotlinx.coroutines.tasks.await
 

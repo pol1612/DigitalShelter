@@ -1,5 +1,7 @@
 package com.pol.sane.jove.digitalshelter.ui
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -10,6 +12,7 @@ import com.pol.sane.jove.digitalshelter.ui.screens.main.adopter.AdopterMainScree
 import com.pol.sane.jove.digitalshelter.ui.screens.main.shelter.ShelterMainScreen
 import com.pol.sane.jove.digitalshelter.ui.screens.start.StartScreen
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun DigitalShelter(
     navController: NavHostController = rememberNavController(),

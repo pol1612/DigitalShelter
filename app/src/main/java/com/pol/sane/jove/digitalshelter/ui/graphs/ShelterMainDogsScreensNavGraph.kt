@@ -1,5 +1,7 @@
 package com.pol.sane.jove.digitalshelter.ui.graphs
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraphBuilder
@@ -10,6 +12,7 @@ import com.pol.sane.jove.digitalshelter.ui.screens.main.shelter.ShelterMainScree
 import com.pol.sane.jove.digitalshelter.ui.screens.main.shelter.shelter_screens.dogs_screens.add_dog.ShelterDogCreationScreen
 import com.pol.sane.jove.digitalshelter.ui.screens.main.shelter.shelter_screens.dogs_screens.dog_list.ShelterDogsListScreen
 
+@RequiresApi(Build.VERSION_CODES.O)
 fun NavGraphBuilder.shelterMainDogsScreensNavGraph(navHostController: NavHostController) {
     navigation(
         route = ShelterMainScreenComposables.Dogs.route,

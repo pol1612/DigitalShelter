@@ -1,8 +1,7 @@
 
 package com.pol.sane.jove.digitalshelter.data.interfaces
 
-import com.pol.sane.jove.digitalshelter.data.pojo.Dog
-import com.pol.sane.jove.digitalshelter.data.pojo.User
+import com.pol.sane.jove.digitalshelter.data.database_entities.Dog
 
 interface DogServiceInterface {
         //TODO: create Dog

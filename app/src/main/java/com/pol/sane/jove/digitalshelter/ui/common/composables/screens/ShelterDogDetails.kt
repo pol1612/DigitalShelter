@@ -2,7 +2,6 @@ package com.pol.sane.jove.digitalshelter.ui.common.composables.screens
 
 import android.net.Uri
 import android.util.Log
-import android.widget.TextSwitcher
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -32,7 +31,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.pol.sane.jove.digitalshelter.R
-import com.pol.sane.jove.digitalshelter.data.pojo.Dog
+import com.pol.sane.jove.digitalshelter.data.database_entities.Dog
 import com.pol.sane.jove.digitalshelter.ui.common.composables.simples.BasicBigField
 import com.pol.sane.jove.digitalshelter.ui.common.composables.simples.BasicField
 import com.pol.sane.jove.digitalshelter.ui.common.composables.simples.DatePicker

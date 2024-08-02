@@ -77,13 +77,17 @@ fun LoginScreen(
                         .fillMaxWidth()
                         .height(90.dp)
                 )
-                EmailField(value = uiState.email, onNewValue = {newValue -> viewModel.onEmailChange(newValue)})
+                EmailField(value = uiState.email, onNewValue = {
+                    newValue -> viewModel.onEmailChange(newValue)
+                })
                 Spacer(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(30.dp)
                 )
-                PasswordField(value = uiState.password, onNewValue = {newValue -> viewModel.onPasswordChange(newValue)})
+                PasswordField(value = uiState.password, onNewValue = {
+                    newValue -> viewModel.onPasswordChange(newValue)
+                })
                 Spacer(
                     modifier = Modifier
                         .fillMaxWidth()

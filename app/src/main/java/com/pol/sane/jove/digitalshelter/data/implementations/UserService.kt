@@ -5,7 +5,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException
-import com.pol.sane.jove.digitalshelter.data.pojo.User
+import com.pol.sane.jove.digitalshelter.data.database_entities.User
 import com.pol.sane.jove.digitalshelter.data.interfaces.UserServiceInterface
 import kotlinx.coroutines.tasks.await
 

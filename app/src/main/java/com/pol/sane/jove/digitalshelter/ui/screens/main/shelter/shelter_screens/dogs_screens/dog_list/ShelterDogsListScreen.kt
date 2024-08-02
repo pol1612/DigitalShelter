@@ -1,5 +1,7 @@
 package com.pol.sane.jove.digitalshelter.ui.screens.main.shelter.shelter_screens.dogs_screens.dog_list
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -33,7 +35,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.pol.sane.jove.digitalshelter.R
-import com.pol.sane.jove.digitalshelter.data.pojo.Dog
+import com.pol.sane.jove.digitalshelter.data.database_entities.Dog
 import com.pol.sane.jove.digitalshelter.ui.screens.main.shelter.shelter_screens.dogs_screens.ShelterDogsScreensUiState
 import com.pol.sane.jove.digitalshelter.ui.screens.main.shelter.shelter_screens.dogs_screens.ShelterDogsScreensViewModel
 import java.time.LocalDate
@@ -41,6 +43,7 @@ import java.time.LocalDateTime
 import java.time.Period
 import java.time.ZoneId
 
+@RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ShelterDogsListScreen(navHostController: NavHostController) {
@@ -104,6 +107,7 @@ fun EmptyDogsList(){
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun DogsList(dogsHashMap: HashMap<String, Dog>) {
     Column {
@@ -114,6 +118,7 @@ fun DogsList(dogsHashMap: HashMap<String, Dog>) {
         }
     }
 }
+@RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DogItem(dog: Dog){

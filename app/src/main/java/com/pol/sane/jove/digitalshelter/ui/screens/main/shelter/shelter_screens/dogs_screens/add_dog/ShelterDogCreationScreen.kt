@@ -59,20 +59,14 @@ fun ShelterDogCreationScreen(
             )
         }
     ) {
-        Column(
-            modifier = Modifier
-                .padding(it),
-
-
-        ) {
+        Column(modifier = Modifier.padding(it),) {
             val singlePhotoPicker = rememberLauncherForActivityResult(
                 contract = ActivityResultContracts.PickVisualMedia(),
                 onResult = {
                     viewModel.updateLocalUri(it)
                 }
             )
-            Column(){
-
+            Column{
                 ShelterDogDetails(
                     onImagePickerClick = {
                         singlePhotoPicker.launch(
@@ -99,9 +93,7 @@ fun ShelterDogCreationScreen(
                     isDogMale = uiState.isDogMale,
                     onMaleRadioButtonClick = { viewModel.onMaleRadioButtonClick() },
                     onFemaleRadioButtonClick = { viewModel.onFemaleRadioButtonClick() }
-
                 )
-
             }
         }
     }

@@ -1,5 +1,7 @@
 package com.pol.sane.jove.digitalshelter.ui.screens.main.shelter
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -20,6 +22,7 @@ import com.pol.sane.jove.digitalshelter.ui.common.extensions.AddBottBarNavItem
 import com.pol.sane.jove.digitalshelter.ui.graphs.shelterMainDogsScreensNavGraph
 import com.pol.sane.jove.digitalshelter.ui.screens.main.shelter.shelter_screens.user_settings.ShelterUserSettingsScreen
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun ShelterMainScreen(
     rootNavController: NavHostController,

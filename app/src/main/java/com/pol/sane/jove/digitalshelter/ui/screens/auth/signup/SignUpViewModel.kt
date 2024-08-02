@@ -20,7 +20,7 @@ import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.firestore.GeoPoint
 import com.google.maps.android.compose.CameraPositionState
-import com.pol.sane.jove.digitalshelter.data.pojo.UserDetails
+import com.pol.sane.jove.digitalshelter.data.database_entities.UserDetails
 import com.pol.sane.jove.digitalshelter.data.interfaces.UserDetailsServiceInterface
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -104,7 +104,10 @@ class SignUpViewModel: ViewModel(), KoinComponent {
                 Log.i("makeCurrentLocationCameraLocation", "loc found")
                 _uiState.update {
                     it.copy(
-                        cameraPositionState = CameraPositionState(CameraPosition.fromLatLngZoom(LatLng(location.latitude, location.longitude),10f))
+                        cameraPositionState = CameraPositionState(CameraPosition
+                            .fromLatLngZoom(LatLng
+                                (location.latitude, location.longitude)
+                                ,10f))
                     )
                 }
             }

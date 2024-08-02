@@ -1,6 +1,6 @@
 package com.pol.sane.jove.digitalshelter.data.interfaces
 
-import com.pol.sane.jove.digitalshelter.data.pojo.UserDetails
+import com.pol.sane.jove.digitalshelter.data.database_entities.UserDetails
 
 interface UserDetailsServiceInterface {
 
